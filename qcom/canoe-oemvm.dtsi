@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: BSD-3-Clause
 /*
- * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+ * Copyright (c) 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
  */
 
 #include <dt-bindings/interrupt-controller/arm-gic.h>
@@ -13,26 +13,53 @@
 		      <0x1010294 0x10000>, <0x1010294 0x20000>, <0x1010295 0x10000>,
 		      <0x1010295 0x20000>, <0x1030294 0x10000>, <0x1030294 0x20000>,
 		      <0x1030295 0x10000>, <0x1030295 0x20000>;
+	interrupt-parent = <&vgic>;
 
-	host {
+	chosen {
+	};
+
+	cpus {
 		#address-cells = <0x2>;
-		#size-cells = <0x2>;
+		#size-cells = <0x0>;
 
-		qcom,gh-qtimer@1781b000 {
-			reg = <0x0 0x1781b000 0x0 0x1000>;
-			android,pvmfw,target = <&gh_qtimer>;
+		CPU0: cpu@0 {
+			compatible = "arm,armv8";
+			reg = <0x0 0x0>;
+			device_type = "cpu";
+			enable-method = "psci";
+			cpu-idle-states = <&CPU_PWR_DWN
+					   &CLUSTER_PWR_DWN>;
 		};
 
-		qcom,wdt@17600000 {
-			reg = <0x0 0x17600000 0x0 0x1000>;
-			android,pvmfw,target = <&wdog>;
+		CPU1: cpu@100 {
+			compatible = "arm,armv8";
+			reg = <0x0 0x100>;
+			device_type = "cpu";
+			enable-method = "psci";
+			cpu-idle-states = <&CPU_PWR_DWN
+					   &CLUSTER_PWR_DWN>;
+
+		};
+	};
+
+	idle-states {
+		CPU_PWR_DWN: c4 {  /* Using Medium C4 latencies */
+			compatible = "arm,idle-state";
+			idle-state-name = "ret";
+			entry-latency-us = <93>;
+			exit-latency-us = <129>;
+			min-residency-us = <560>;
+			arm,psci-suspend-param = <0x00000004>;
 		};
 
-		non-devices-common {
-			reg = <0x0 0x0 0x0 0x0>;
-			android,pvmfw,target = <&non_devices_common>;
+		CLUSTER_PWR_DWN: ss3 { /* C4+CL5+SS3 */
+			compatible = "arm,idle-state";
+			idle-state-name = "ret-pll-off";
+			entry-latency-us = <1964>;
+			exit-latency-us = <1901>;
+			min-residency-us = <24511>;
+			arm,psci-suspend-param = <0x0000C354>;
 		};
-
 	};
 
 	qcom,vm-config {
@@ -51,18 +78,33 @@
 		vm-uri = "vmuid/oemvm";
 		vm-guid = "847bfe26-0b12-5728-812a-06103f6bdec0";
 
-		vm-attrs = "context-dump", "crash-restart", "no-vpm-aggregation";
+		vwdog = &wdog;
+		vm-attrs = "context-dump", "crash-restart";
 
-		/* Dynamically nominate the vmmio ranges */
-		vmmio-ranges;
+		memory {
+			#address-cells = <0x2>;
+			#size-cells = <0x0>;
+			/*
+			 * IPA address linux image is loaded at. Must be within
+			 * first 1GB due to memory hotplug requirement.
+			 */
+			base-address = <0x0 0x88800000 >;
+		};
 
 		segments {
-			fallback-dtb = <2>;
-			ramdisk = <3>;
+			ramdisk = <2>;
 		};
 
 		vcpus {
+			config = "/cpus";
 			affinity = "proxy";
+			affinity-map = <0x5 0x6>;
+			sched-priority = <0>;       /* relative to PVM */
+			sched-timeslice = <2000>;   /* in ms */
+		};
+
+		interrupts {
+			config = &vgic;
 		};
 
 		vdevices {
@@ -81,6 +123,36 @@
 				message-size = <0x000000f0>;
 				queue-depth = <0x00000008>;
 				qcom,label = <0x1>;
+			};
+
+			virtio-mmio@0 {
+				vdevice-type = "virtio-mmio";
+				generate = "/virtio-mmio";
+				peer-default;
+				vqs-num = <0x1>;
+				push-compatible = "virtio,mmio";
+				dma-coherent;
+				dma_base = <0x0 0x0>;
+				memory {
+					qcom,label = <0x16>;    //persist.img
+					#address-cells = <0x2>;
+					allocate-base;
+				};
+			};
+
+			virtio-mmio@1 {
+				vdevice-type = "virtio-mmio";
+				generate = "/virtio-mmio";
+				peer-default;
+				vqs-num = <0x2>;
+				push-compatible = "virtio,mmio";
+				dma-coherent;
+				dma_base = <0x0 0x4000>;
+				memory {
+					qcom,label = <0x13>;    //system.img
+					#address-cells = <0x2>;
+					allocate-base;
+				};
 			};
 
 			test-dbl-oemvm {
@@ -124,13 +196,26 @@
 				qcom,label = <0x103>;
 			};
 
+			swiotlb-shm {
+				vdevice-type = "shm";
+				generate = "/swiotlb";
+				push-compatible = "swiotlb";
+				peer-default;
+				dma_base = <0x0 0x8000>;
+				memory {
+					qcom,label = <0x14>;
+					#address-cells = <0x2>;
+					allocate-base;
+				};
+			};
+
 			mem-buf-message-queue-pair {
 				vdevice-type = "message-queue-pair";
 				generate = "/hypervisor/membuf-msgq-pair";
 				message-size = <0x000000f0>;
 				queue-depth = <0x00000008>;
 				peer-default;
-				qcom,label = <0x000010c>;
+				qcom,label = <0x000010C>;
 			};
 
 			qrtr-shm {
@@ -140,17 +225,11 @@
 				peer-default;
 				memory {
 					qcom,label = <0x108>;
-					#address-cells = <0x2>;
-					base = <0x0 0x64006000>;
+					allocate-base;
 				};
 			};
 		};
 	};
-};
-
-&{/} {
-	#address-cells = <0x2>;
-	#size-cells = <0x2>;
 
 	firmware: firmware {
 		qcom_scm: qcom_scm {
@@ -159,12 +238,17 @@
 	};
 
 	soc: soc { };
-
 	reserved_memory: reserved-memory {
 		#address-cells = <2>;
 		#size-cells = <2>;
 		ranges;
 	};
+
+	/* Techpack dtbos will target this node for adding required-subnodes property
+	 * For Canoe VMs DTB will be replaced by a DTBO.
+	 * Add this until DTB build is deprecated.
+	 */
+	non_devices_common: non-devices-common { };
 };
 
 &reserved_memory {
@@ -176,46 +260,51 @@
 };
 
 &soc {
-	#address-cells = <2>;
-	#size-cells = <2>;
-	ranges = <0x0 0x0 0x0 0x0 0x0 0xffffffff>;
+	#address-cells = <1>;
+	#size-cells = <1>;
+	ranges = <0 0 0 0xffffffff>;
 	compatible = "simple-bus";
 
-	non_devices_common: non-devices-common {
-		reg = <0x0 0x0 0x0 0x0>;
-		required-subnodes = <&qcom_scm
-					&qcom_smcinvoke
-					&qcom_mem_object
-					&qtee_shmbridge
-					&qcom_mem_buf
-					&virtio_mem_device
-					&qcom_test_dbl_oemvm
-					&qcom_test_msgq_oemvm
-					&qcom_test_large_dmabuf_oemvm
-					&qmsgq_gunyah
-					&qcom_qrtr
-					&qrtr_gunyah
-					&google_debug_kinfo
-					&kinfo_mem
-					&qcom_dma_heaps
-					>;
+	psci {
+		compatible = "arm,psci-1.0";
+		method = "smc";
 	};
 
-	qcom_smcinvoke: qcom_smcinvoke {
+	vgic: interrupt-controller@17000000 {
+		compatible = "arm,gic-v3";
+		#interrupt-cells = <3>;
+		interrupt-controller;
+		#redistributor-regions = <1>;
+		redistributor-stride = <0x0 0x40000>;
+		reg = <0x17000000 0x10000>,	/* GICD */
+		      <0x17080000 0x200000>;	/* GICR * 8 */
+	};
+
+	arch_timer: timer {
+		compatible = "arm,armv8-timer";
+		always-on;
+		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+			     <GIC_PPI 12 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
+		clock-frequency = <19200000>;
+	};
+
+	qcom_smcinvoke {
 		compatible = "qcom,smcinvoke";
 	};
 
-	qcom_mem_object: qcom_mem_object {
+	qcom_mem_object {
 		compatible = "qcom,mem-object";
 	};
 
-	qtee_shmbridge: qtee_shmbridge {
+	qtee_shmbridge {
 		compatible = "qcom,tee-shared-memory-bridge";
 		qcom,custom-bridge-size = <512>;
 		qcom,support-hypervisor;
 	};
 
-	qcom_mem_buf: qcom,mem-buf {
+	qcom,mem-buf {
 		compatible = "qcom,mem-buf";
 		qcom,mem-buf-capabilities = "consumer";
 		qcom,ipa-range = <0x0 0x0 0xf 0xffffffff>;
@@ -228,7 +317,7 @@
 		qcom,msgq-names = "oem_vm";
 	};
 
-	virtio_mem_device: virtio_mem_device {
+	virtio_mem_device {
 		compatible = "qcom,virtio-mem";
 		depends-on-supply = <&mem_buf_msgq>;
 		/* Must be memory_block_size_bytes() aligned */
@@ -238,64 +327,63 @@
 		qcom,initial-movable-zone-size = <0x2000000>;
 	};
 
-	qcom_test_dbl_oemvm: qcom,test-dbl-oemvm {
+	qcom,test-dbl-oemvm {
 		compatible = "qcom,gh-dbl";
 		qcom,label = <0x105>;
 	};
 
-	qcom_test_msgq_oemvm: qcom,test-msgq-oemvm {
+	qcom,test-msgq-oemvm {
 		compatible = "qcom,gh-msgq-test";
 		gunyah-label = <0x105>;
 		affinity = <0>;
 	};
 
-	qcom_test_large_dmabuf_oemvm: qcom,test-large-dmabuf-oemvm {
+	qcom,test-large-dmabuf-oemvm {
 		compatible = "qcom,gh-large-dmabuf-test";
 		gunyah-label = <0x10e>;
 	};
 
-	qmsgq_gunyah: qmsgq-gunyah {
+	qmsgq-gunyah {
 		compatible = "qcom,qmsgq-gh";
-		msgq-label = <0x103>;
 		peer = <2>;
+		msgq-label = <0x103>;
 	};
 
-	gh_qtimer: qcom,gh-qtimer@1781b000 {
+	qcom,gh-qtimer@1781b000 {
 		compatible = "qcom,gh-qtmr";
-		reg = <0x0 0x1781b000 0x0 0x1000>;
+		reg = <0x1781b000 0x1000>;
 		reg-names = "qtmr-base";
 		interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
 		interrupt-names = "qcom,qtmr-intr";
 		qcom,secondary;
 	};
 
-	qcom_qrtr: qcom,qrtr {
+	qcom,qrtr {
 		compatible = "qcom,qrtr";
 		qcom,node-id = <21>;
 	};
 
-	qrtr_gunyah: qrtr-gunyah {
+	qrtr-gunyah {
 		compatible = "qcom,qrtr-gunyah";
 		gunyah-label = <0x108>;
 	};
 
-	google_debug_kinfo: google,debug-kinfo {
+	google,debug-kinfo {
 		compatible = "google,debug-kinfo";
 		memory-region = <&kinfo_mem>;
 	};
 
 	wdog: qcom,wdt@17600000 {
 		compatible = "qcom,msm-watchdog";
-		reg = <0x0 0x17600000 0x0 0x1000>;
+		reg = <0x17600000 0x1000>;
 		reg-names = "wdt-base";
-		interrupts = <GIC_SPI 0x3a0 IRQ_TYPE_LEVEL_HIGH>,
-			     <GIC_SPI 0x3a1 IRQ_TYPE_LEVEL_HIGH>;
+		interrupts = <GIC_SPI 0 IRQ_TYPE_LEVEL_HIGH>,
+			     <GIC_SPI 1 IRQ_TYPE_LEVEL_HIGH>;
 		qcom,bark-time = <11000>;
 		qcom,pet-time = <9360>;
 		qcom,ipi-ping;
 		qcom,wakeup-enable;
 	};
-};
 
-#include "canoe-vm-dma-heaps-avf.dtsi"
-#include "canoe-oemvm-rm-info-avf.dtsi"
+};
+#include "canoe-vm-dma-heaps.dtsi"

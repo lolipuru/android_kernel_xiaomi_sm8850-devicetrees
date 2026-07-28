@@ -161,6 +161,7 @@
 		nvmem = <&pmk8850_sdam_5>, <&pmk8850_sdam_6>;
 		nvmem-names = "pon_log0", "pon_log1";
 		depends-on-supply = <&wdog>;
+		qcom,pmic-fault-panic;
 	};
 
 	regulator_ocp_notifier: regulator-ocp-notifer {
@@ -200,6 +201,23 @@
 	};
 };
 
+&pmih010x_gpios {
+	pinctrl-0 = <&display_therm_default>, <&charger_therm_default>;
+	pinctrl-names = "default";
+
+	display_therm_default: display_therm-default-state {
+		pins = "gpio18";
+		function = "normal";
+		bias-high-impedance;
+	};
+
+	charger_therm_default: charger_therm-default-state {
+		pins = "gpio12";
+		function = "normal";
+		bias-high-impedance;
+	};
+};
+
 &pmk8850_vadc {
 	/* PMK8850 ADC Channels */
 	pmk8850_offset_ref {
@@ -215,14 +233,6 @@
 	pmk8850_die_temp {
 		reg = <PMK8850_ADC5_GEN4_DIE_TEMP(0, PMK8850_SID)>;
 		label = "pmk8850_die_temp";
-	};
-
-	pmk8850_xo_therm {
-		reg = <PMK8850_ADC5_GEN4_AMUX_THM1_XO_THERM_100K_PU(0, PMK8850_SID)>;
-		label = "pmk8850_xo_therm";
-		qcom,ratiometric;
-		qcom,hw-settle-time = <200>;
-		qcom,adc-tm-type = <1>;
 	};
 
 	xoagg_therm: pmk8850_xoagg_therm {
@@ -253,38 +263,6 @@
 	pmh0101_vph_pwr {
 		reg = <PMH0101_ADC5_GEN4_VPH_PWR(0, PMH0101_SID)>;
 		label = "pmh0101_vph_pwr";
-	};
-
-	pmh0101_skin_therm {
-		reg = <PMH0101_ADC5_GEN4_AMUX_THM1_100K_PU(0, PMH0101_SID)>;
-		label = "pmh0101_skin_therm";
-		qcom,ratiometric;
-		qcom,hw-settle-time = <200>;
-		qcom,adc-tm-type = <1>;
-	};
-
-	pmh0101_cam_flash_therm {
-		reg = <PMH0101_ADC5_GEN4_AMUX_THM2_100K_PU(0, PMH0101_SID)>;
-		label = "pmh0101_cam_flash_therm";
-		qcom,ratiometric;
-		qcom,hw-settle-time = <200>;
-		qcom,adc-tm-type = <1>;
-	};
-
-	pmh0101_wlan_therm {
-		reg = <PMH0101_ADC5_GEN4_AMUX_THM3_100K_PU(0, PMH0101_SID)>;
-		label = "pmh0101_wlan_therm";
-		qcom,ratiometric;
-		qcom,hw-settle-time = <200>;
-		qcom,adc-tm-type = <1>;
-	};
-
-	pmh0101_pa_therm1 {
-		reg = <PMH0101_ADC5_GEN4_AMUX_THM4_100K_PU(0, PMH0101_SID)>;
-		label = "pmh0101_pa_therm_1";
-		qcom,ratiometric;
-		qcom,hw-settle-time = <200>;
-		qcom,adc-tm-type = <1>;
 	};
 
 	qtm_therm: pmh0101_qtm_therm {
@@ -391,36 +369,31 @@
 		label = "pmih010x_lite_die_temp";
 	};
 
-	pmih010x_batt_therm {
-		reg = <PMIH010X_ADC5_GEN4_AMUX_THM1_BAT_THERM_100K_PU(1, PMIH010X_SID)>;
-		label = "pmih010x_batt_therm";
-		qcom,ratiometric;
-		qcom,hw-settle-time = <200>;
-		qcom,adc-tm-type = <1>;
-	};
-
-	pmih010x_usb_therm {
-		reg = <PMIH010X_ADC5_GEN4_AMUX_THM4_USB_THERM_100K_PU(1, PMIH010X_SID)>;
-		label = "pmih010x_usb_therm";
-		qcom,ratiometric;
-		qcom,hw-settle-time = <200>;
-		qcom,adc-tm-type = <1>;
-	};
-
-	pmih010x_batt_therm2 {
+	/*pmih010x_batt_therm2 {
 		reg = <PMIH010X_ADC5_GEN4_AMUX3_BAT2_THERM_100K_PU(1, PMIH010X_SID)>;
 		label = "pmih010x_batt_therm_2";
 		qcom,ratiometric;
 		qcom,hw-settle-time = <200>;
 		qcom,adc-tm-type = <1>;
-	};
+	};*/
 
-	pmih010x_wls_therm {
-		reg = <PMIH010X_ADC5_GEN4_AMUX4_GPIO12_100K_PU(1, PMIH010X_SID)>;
-		label = "pmih010x_wls_therm";
+	/* PMIH010X ADC Channels */
+	display_therm: pmih010x_display_therm {
+		reg = <PMIH010X_ADC5_GEN4_AMUX5_GPIO18_100K_PU(1, PMIH010X_SID)>;
+		label = "pmih010x_display_therm";
 		qcom,ratiometric;
 		qcom,hw-settle-time = <200>;
 		qcom,adc-tm-type = <1>;
+		status = "disabled";
+	};
+
+	charger_therm: pmih010x_charger_therm {
+		reg = <PMIH010X_ADC5_GEN4_AMUX4_GPIO12_100K_PU(1, PMIH010X_SID)>;
+		label = "pmih010x_charger_therm";
+		qcom,ratiometric;
+		qcom,hw-settle-time = <200>;
+		qcom,adc-tm-type = <1>;
+		status = "disabled";
 	};
 };
 
