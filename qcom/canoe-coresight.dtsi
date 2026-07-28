@@ -459,9 +459,6 @@
 		qcom,secure-component;
 
 		out-ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
-
 			port@0 {
 				reg = <0>;
 				modem_etm0_out_funnel_modem_q6_dup: endpoint {
@@ -489,9 +486,6 @@
 		trace-name = "modem2-etm0";
 
 		out-ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
-
 			port@0 {
 				reg = <0>;
 				modem2_etm0_out_funnel_modem: endpoint {
@@ -888,13 +882,11 @@
 		trace-name = "turing-etm0";
 
 		out-ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
 			port@0 {
 				reg = <0>;
-				turing_etm0_out_funnel_turing_dup1: endpoint {
+				turing_etm0_out_funnel_turing_dup: endpoint {
 					remote-endpoint =
-						<&funnel_turing_dup1_in_turing_etm0>;
+						<&funnel_turing_dup_in_turing_etm0>;
 				};
 			};
 
@@ -908,14 +900,14 @@
 		};
 	};
 
-	funnel_turing_dup1: funnel@1118a000 {
+	funnel_turing_dup: funnel@1114c000 {
 		compatible = "arm,primecell";
 		arm,primecell-periphid = <0x000bb908>;
-		reg = <0x0 0x1118a000 0x0 0x1000>,
+		reg = <0x0 0x1114c000 0x0 0x1000>,
 			<0x0 0x11189000 0x0 0x1000>;
 		reg-names = "funnel-base-dummy", "funnel-base-real";
 
-		device-name = "funnel_turing_dup1";
+		device-name = "funnel_turing_dup";
 
 		qcom,duplicate-funnel;
 		clocks = <&aoss_qmp>;
@@ -926,88 +918,18 @@
 			#size-cells = <0>;
 			port@3 {
 				reg = <3>;
-				funnel_turing_dup1_in_turing_etm0: endpoint {
+				funnel_turing_dup_in_turing_etm0: endpoint {
 					remote-endpoint =
-					<&turing_etm0_out_funnel_turing_dup1>;
+					<&turing_etm0_out_funnel_turing_dup>;
 				};
 			};
 		};
 
 		out-ports {
 			port {
-				funnel_turing_dup1_out_funnel_turing_dup2: endpoint {
+				funnel_turing_dup_out_funnel_turing: endpoint {
 					remote-endpoint =
-					<&funnel_turing_dup2_in_funnel_turing_dup1>;
-				};
-			};
-		};
-	};
-
-	funnel_turing_dup2: funnel@1118b000 {
-		compatible = "arm,primecell";
-		arm,primecell-periphid = <0x000bb908>;
-		reg = <0x0 0x1118b000 0x0 0x1000>,
-			<0x0 0x11189000 0x0 0x1000>;
-		reg-names = "funnel-base-dummy", "funnel-base-real";
-
-		device-name = "funnel_turing_dup2";
-
-		qcom,duplicate-funnel;
-		clocks = <&aoss_qmp>;
-		clock-names = "apb_pclk";
-
-		in-ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
-			port@4 {
-				reg = <4>;
-				funnel_turing_dup2_in_funnel_turing_dup1: endpoint {
-					remote-endpoint =
-					<&funnel_turing_dup1_out_funnel_turing_dup2>;
-				};
-			};
-		};
-
-		out-ports {
-			port {
-				funnel_turing_dup2_out_funnel_turing_dup3: endpoint {
-					remote-endpoint =
-					<&funnel_turing_dup3_in_funnel_turing_dup2>;
-				};
-			};
-		};
-	};
-
-	funnel_turing_dup3: funnel@1118c000 {
-		compatible = "arm,primecell";
-		arm,primecell-periphid = <0x000bb908>;
-		reg = <0x0 0x1118c000 0x0 0x1000>,
-			<0x0 0x11189000 0x0 0x1000>;
-		reg-names = "funnel-base-dummy", "funnel-base-real";
-
-		device-name = "funnel_turing_dup3";
-
-		qcom,duplicate-funnel;
-		clocks = <&aoss_qmp>;
-		clock-names = "apb_pclk";
-
-		in-ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
-			port@5 {
-				reg = <5>;
-				funnel_turing_dup3_in_funnel_turing_dup2: endpoint {
-					remote-endpoint =
-					<&funnel_turing_dup2_out_funnel_turing_dup3>;
-				};
-			};
-		};
-
-		out-ports {
-			port {
-				funnel_turing_dup3_out_funnel_turing: endpoint {
-					remote-endpoint =
-					<&funnel_turing_in_funnel_turing_dup3>;
+					<&funnel_turing_in_funnel_turing_dup>;
 				};
 			};
 		};
@@ -1035,11 +957,11 @@
 				};
 			};
 
-			port@6 {
-				reg = <6>;
-				funnel_turing_in_funnel_turing_dup3: endpoint {
+			port@4 {
+				reg = <4>;
+				funnel_turing_in_funnel_turing_dup: endpoint {
 					remote-endpoint =
-					<&funnel_turing_dup3_out_funnel_turing>;
+					<&funnel_turing_dup_out_funnel_turing>;
 				};
 			};
 		};
@@ -2894,7 +2816,6 @@
 		reg-names = "traceNoc-base";
 
 		device-name = "tracenoc_lpass";
-		qcom,interconnect-trace-noc;
 
 		clocks = <&aoss_qmp>;
 		clock-names = "apb_pclk";
@@ -2950,7 +2871,6 @@
 		reg-names = "traceNoc-base";
 
 		device-name = "tracenoc_soccp";
-		qcom,interconnect-trace-noc;
 
 		clocks = <&aoss_qmp>;
 		clock-names = "apb_pclk";
@@ -3007,7 +2927,6 @@
 		reg-names = "traceNoc-base";
 
 		device-name = "tracenoc_video";
-		qcom,interconnect-trace-noc;
 
 		clocks = <&aoss_qmp>;
 		clock-names = "apb_pclk";
@@ -3045,6 +2964,7 @@
 
 		clocks = <&aoss_qmp>;
 		clock-names = "apb_pclk";
+		status = "disabled";
 
 		out-ports {
 			port {
@@ -3063,7 +2983,6 @@
 		reg-names = "traceNoc-base";
 
 		device-name = "tracenoc_eva";
-		qcom,interconnect-trace-noc;
 
 		clocks = <&aoss_qmp>;
 		clock-names = "apb_pclk";
@@ -3101,6 +3020,7 @@
 
 		clocks = <&aoss_qmp>;
 		clock-names = "apb_pclk";
+		status = "disabled";
 
 		out-ports {
 			port {
@@ -3121,6 +3041,7 @@
 
 		clocks = <&aoss_qmp>;
 		clock-names = "apb_pclk";
+		status = "disabled";
 
 		out-ports {
 			port {
@@ -3141,6 +3062,7 @@
 
 		clocks = <&aoss_qmp>;
 		clock-names = "apb_pclk";
+		status = "disabled";
 
 		out-ports {
 			port {
@@ -3159,33 +3081,33 @@
 		reg-names = "traceNoc-base";
 
 		device-name = "tracenoc_mdss";
-		qcom,interconnect-trace-noc;
 
 		clocks = <&aoss_qmp>;
 		clock-names = "apb_pclk";
+		status = "disabled";
 
 		in-ports {
 			#address-cells = <1>;
 			#size-cells = <0>;
 
-			port@1 {
-				reg = <1>;
+			port@0 {
+				reg = <0>;
 				tn_mdss_in_tpdm_mdss: endpoint {
 					remote-endpoint =
 					<&tpdm_mdss_out_tn_mdss>;
 				};
 			};
 
-			port@2 {
-				reg = <2>;
+			port@1 {
+				reg = <1>;
 				tn_mdss_in_tpdm_mdss_rscc: endpoint {
 					remote-endpoint =
 					<&tpdm_mdss_rscc_out_tn_mdss>;
 				};
 			};
 
-			port@3 {
-				reg = <3>;
+			port@2 {
+				reg = <2>;
 				tn_mdss_in_tpdm_mdss_dcp: endpoint {
 					remote-endpoint =
 					<&tpdm_mdss_dcp_out_tn_mdss>;
@@ -3254,7 +3176,6 @@
 		reg-names = "traceNoc-base";
 
 		device-name = "tracenoc_gpu";
-		qcom,interconnect-trace-noc;
 
 		clocks = <&aoss_qmp>;
 		clock-names = "apb_pclk";
@@ -3491,7 +3412,6 @@
 		reg-names = "traceNoc-base";
 
 		device-name = "tracenoc_ddr";
-		qcom,interconnect-trace-noc;
 
 		clocks = <&aoss_qmp>;
 		clock-names = "apb_pclk";
@@ -3948,7 +3868,6 @@
 
 		clocks = <&aoss_qmp>;
 		clock-names = "apb_pclk";
-		qcom,trace-noc-v2;
 
 		in-ports {
 			#address-cells = <1>;
@@ -4617,9 +4536,6 @@
 		atid = <40 41>;
 
 		out-ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
-
 			port@0 {
 				reg = <0>;
 				audio_etm0_out_funnel_lpass_lpi: endpoint {
@@ -4645,9 +4561,6 @@
 		atid = <25>;
 
 		out-ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
-
 			port@0 {
 				reg = <0>;
 				lpass_stm_out_funnel_lpass_lpi_1: endpoint {
@@ -4674,9 +4587,6 @@
 		trace-name = "tpda-lpass-lpi";
 
 		out-ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
-
 			port@0 {
 				reg = <0>;
 				tpdm_lpass_lpi_out_funnel_lpass_lpi_1: endpoint {
@@ -4702,9 +4612,6 @@
 		trace-name = "tpda-lpass-lpi";
 
 		out-ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
-
 			port@0 {
 				reg = <0>;
 				tpdm_lpass_rscc_out_funnel_lpass_lpi_1: endpoint {
@@ -4731,9 +4638,6 @@
 		status = "disabled";
 
 		out-ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
-
 			port@0 {
 				reg = <0>;
 				tpdm_lpass_audio_out_funnel_lpass_lpi_1: endpoint {
@@ -4845,9 +4749,6 @@
 		trace-name = "tracenoc-ddr-lpi";
 
 		out-ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
-
 			port@0 {
 				reg = <0>;
 				tpdm_ddr_lpi_out_funnel_aoss: endpoint {
@@ -5254,9 +5155,6 @@
 		qcom,inst-id = <5>;
 
 		in-ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
-
 			port@0 {
 				reg = <0>;
 				qmi_in_audio_etm0: endpoint {
@@ -5314,9 +5212,6 @@
 		qcom,inst-id = <2>;
 
 		in-ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
-
 			port@0 {
 				reg = <0>;
 				qmi_in_modem_etm0: endpoint {

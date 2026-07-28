@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: BSD-3-Clause
 /*
- * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
  */
 
 #include <dt-bindings/thermal/thermal_qti.h>
@@ -119,11 +119,6 @@
 
 			modem_bcl: modem_bcl {
 				qcom,qmi-dev-name = "bcl";
-				#cooling-cells = <2>;
-			};
-
-			modem_bcl_mtpl_dsc: modem_bcl_mtpl_dsc {
-				qcom,qmi-dev-name = "modem_bcl_mtpl_dsc";
 				#cooling-cells = <2>;
 			};
 		};

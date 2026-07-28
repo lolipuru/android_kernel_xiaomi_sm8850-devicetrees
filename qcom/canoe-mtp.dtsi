@@ -11,6 +11,7 @@
 #include "canoe-pmic-overlay.dtsi"
 #include "canoe-qpt-overlay.dtsi"
 #include "canoe-thermal-overlay.dtsi"
+#include <dt-bindings/phy/qcom,usb3-3nm-qmp-combo.h>
 
 &soc {
 	gpio_keys {
@@ -147,12 +148,12 @@
 	qcom,uses_level_shifter;
 	qcom,external-fb-clk;
 
-	status = "ok";
+	status = "disabled";
 };
 
 &usb0 {
 	usb-role-switch;
-	qcom,wcd_usbss = <&wcd_usbss>;
+	//qcom,wcd_usbss = <&wcd_usbss>;
 
 	port {
 		usb_port0: endpoint {
@@ -256,6 +257,7 @@
 	};
 };
 
+/*
 &qupv3_se19_i2c {
 	#address-cells = <1>;
 	#size-cells = <0>;
@@ -295,6 +297,7 @@
 						&tlmm 51 0 &tlmm 66 0 &tlmm 158 0x2008>;
 	};
 };
+*/
 
 &regulator_ocp_notifier {
 	periph-1c1-supply = <&L1B>;
@@ -375,14 +378,14 @@
 	periph-d46-supply = <&L7N>;
 };
 
-&qtm_therm {
+/*&qtm_therm {
 	status = "ok";
 };
 
 &pmk8850_vadc {
 	pinctrl-0 = <&pa_therm2_default>, <&qtm_therm_default>;
 	pinctrl-names = "default";
-};
+};*/
 
 &pmic_glink_debug {
 	i2c@104 {

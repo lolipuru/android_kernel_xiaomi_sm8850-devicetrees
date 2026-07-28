@@ -39,7 +39,7 @@
 
 	chosen: chosen {
 		/* All new command line changes must go into canoe-v2.dtsi */
-		bootargs = "android_arch_task_struct_size=512 loglevel=6 arm64.nosme log_buf_len=512K cpufreq.default_governor=performance sysctl.kernel.sched_pelt_multiplier=4 no-steal-acc kpti=0 swiotlb=0 loop.max_part=7 irqaffinity=0-1 fw_devlink.strict=1 pcie_ports=compat pci-msm-drv.pcie_sm_regs=0x1D07000,0x1040,0x1048,0x3000,0x1 kasan=off rcupdate.rcu_expedited=1 rcu_nocbs=0-7 cgroup_disable=pressure printk.console_no_auto_verbose=1 sysctl.kernel.panic_on_rcu_stall=1 ftrace_dump_on_oops restrict_cma_redirect=false slub_debug=- can.stats_timer=0";
+		bootargs = "android_arch_task_struct_size=512 arm64.nosme cpufreq.default_governor=performance sysctl.kernel.sched_pelt_multiplier=4 no-steal-acc kpti=0 swiotlb=0 loop.max_part=7 irqaffinity=0-1 fw_devlink.strict=1 pcie_ports=compat pci-msm-drv.pcie_sm_regs=0x1D07000,0x1040,0x1048,0x3000,0x1 kasan=off rcupdate.rcu_expedited=1 rcu_nocbs=0-7 cgroup_disable=pressure printk.console_no_auto_verbose=0 kernel.panic_on_rcu_stall=1 restrict_cma_redirect=false slub_debug=- androidboot.usbcontroller=a600000.dwc3";
 		stdout-path = "/soc/qcom,qupv3_1_geni_se@ac0000/qcom,qup_uart@a9c000:115200n8";
 	};
 
@@ -91,8 +91,6 @@
 		mmc1 = &sdhc_2; /* SDC2 SD card slot */
 	};
 
-	ddr-regions { };
-
 	firmware: firmware {
 		qcom_scm: qcom_scm { };
 	};
@@ -117,7 +115,6 @@
 			L2_0: l2-cache {
 			      compatible = "cache";
 			      cache-level = <2>;
-			      cache-unified;
 			};
 		};
 
@@ -212,7 +209,6 @@
 			L2_6: l2-cache {
 			      compatible = "cache";
 			      cache-level = <2>;
-			      cache-unified;
 			};
 		};
 
@@ -583,19 +579,6 @@
 		};
 	};
 
-	qcom_qpace: qcom,qpace@0x31400000 {
-		compatible = "qcom,qpace";
-		iommus = <&apps_smmu 0x2020 0x13>,
-			 <&apps_smmu 0x2024 0x13>,
-			 <&apps_smmu 0x2028 0x13>,
-			 <&apps_smmu 0x202C 0x13>;
-		qcom,iommu-dma = "bypass";
-		dma-coherent;
-		interconnects = <&gem_noc MASTER_QPACE &mc_virt SLAVE_EBI1>;
-		interrupts = <GIC_SPI 224 IRQ_TYPE_LEVEL_HIGH>,
-			     <GIC_SPI 226 IRQ_TYPE_LEVEL_HIGH>;
-	};
-
 	qcom,smp2p-cdsp {
 		compatible = "qcom,smp2p";
 		qcom,smem = <94>, <432>;
@@ -831,7 +814,7 @@
 		interrupt-controller;
 		#interrupt-cells = <2>;
 		wakeup-parent = <&pdc>;
-		qcom,gpios-reserved = <36 37 38 39 74 119 120 144 145 146 147>;
+		qcom,gpios-reserved = <36 37 38 39 40 41 42 43 74 119 120 144 145 146 147>;
 	};
 
 	tlmm-vm-mem-access {
@@ -850,9 +833,10 @@
 	tlmm-vm-test {
 		compatible = "qcom,tlmm-vm-test";
 		qcom,master;
-		tlmm-vm-gpio-list = <&tlmm 87 0 &tlmm 97 0 &tlmm 48 0 &tlmm 49 0 &tlmm 50 0
-				&tlmm 51 0 &tlmm 158 0 &tlmm 66 0 &tlmm 100 0 &tlmm 8 0
-				&tlmm 9 0 &tlmm 10 0 &tlmm 11 0>;
+		tlmm-vm-gpio-list = <&tlmm 86 0 &tlmm 87 0 &tlmm 97 0 &tlmm 98 0 &tlmm 48 0
+					&tlmm 49 0 &tlmm 50 0 &tlmm 51 0 &tlmm 158 0 &tlmm 66 0
+					&tlmm 100 0 &tlmm 8 0 &tlmm 9 0 &tlmm 10 0 &tlmm 11 0
+					&tlmm 88 0>;
 	};
 
 	slimbam: bamdma@6C04000 {
@@ -1378,6 +1362,12 @@
 		reg = <0x0 0xb370000 0x0 0x10000>;
 	};
 
+	adsp_sleepmon: adsp-sleepmon {
+		compatible = "qcom,adsp-sleepmon";
+		qcom,wait_time_lpm = <45>;
+		qcom,wait_time_lpi = <45>;
+	};
+
 	qcom,msm-imem@14680000 {
 		compatible = "qcom,msm-imem";
 		reg = <0x0 0x14680000 0x0 0x1000>;
@@ -1650,12 +1640,10 @@
 		vdd_mx-supply = <&VDD_MX_LEVEL>;
 		clocks = <&rpmhcc RPMH_CXO_CLK>,
 			 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
-			 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>,
-			 <&gcc GCC_GPU_GEMNOC_GFX_CLK>;
+			 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
 		clock-names = "bi_tcxo",
 			      "gpll0_out_main",
-			      "gpll0_out_main_div",
-			      "gcc_gpu_gemnoc_gfx_clk";
+			      "gpll0_out_main_div";
 
 		#clock-cells = <1>;
 		#reset-cells = <1>;
@@ -2074,17 +2062,6 @@
 		};
 	};
 
-	spmi-err@c426000 {
-		compatible = "qcom,spmi-pmic-err-debug";
-		reg = <0x0 0xc426000 0x0 0x4000>,
-		      <0x0 0xc425000 0x0 0x4c>;
-		reg-names = "cnfg", "geni";
-		interrupts-extended = <&pdc 23 IRQ_TYPE_LEVEL_HIGH>;
-		interrupt-names = "protocol_irq";
-		nvmem-cells = <&tz_dbg_en>;
-		nvmem-cell-names = "tz_dbg";
-	};
-
 	pmic-arb-debug@11314000 {
 		compatible = "qcom,spmi-pmic-arb-debug-v8";
 		reg = <0x0 0x11314000 0x0 0x64>,
@@ -2335,13 +2312,6 @@
 		qcom,low-latency;
 	};
 
-	qcom,qrtr-mhi-cnss {
-		compatible = "qcom,qrtr-mhi";
-		qcom,dev-id = <0x1111>;
-		qcom,net-id = <1>;
-		qcom,low-latency;
-	};
-
 	soccp_pas: remoteproc-soccp@a3380000 {
 		compatible = "qcom,canoe-soccp-pas";
 		reg = <0x0 0xa3380000 0x0 0x10000>;
@@ -2355,10 +2325,6 @@
 
 		clocks = <&rpmhcc RPMH_CXO_CLK>;
 		clock-names = "xo";
-
-		interconnects = <&aggre_noc MASTER_SOCCP_AGGR_NOC &mc_virt SLAVE_EBI1>,
-				<&gem_noc MASTER_APPSS_PROC &cnoc_main SLAVE_SOCCP>;
-		interconnect-names = "rproc_ddr", "rproc_cnoc";
 
 		firmware-name = "soccp.mbn", "soccp_dtb.mbn";
 
@@ -2738,18 +2704,6 @@
 				qcom,glinkpkt-dev-name = "glink_pkt_data_cdsp";
 		};
 
-		qcom,glinkpkt-ctrl-soccp {
-				qcom,glinkpkt-edge = "soccp";
-				qcom,glinkpkt-ch-name = "LOOPBACK_CTL_SOCCP";
-				qcom,glinkpkt-dev-name = "glink_pkt_ctrl_soccp";
-		};
-
-		qcom,glinkpkt-data-soccp {
-				qcom,glinkpkt-edge = "soccp";
-				qcom,glinkpkt-ch-name = "LOOPBACK_DATA_SOCCP";
-				qcom,glinkpkt-dev-name = "glink_pkt_data_soccp";
-		};
-
 		qcom,glinkpkt-ctrl-lpass {
 				qcom,glinkpkt-edge = "lpass";
 				qcom,glinkpkt-ch-name = "LOOPBACK_CTL_LPASS";
@@ -2852,7 +2806,13 @@
 		qcom,subsys-name = "soccp";
 
 		battery_charger: battery-charger {
-			compatible = "qcom,canoe-battery-charger";
+			compatible = "qcom,battery-charger";
+			status = "disabled";
+		};
+
+		mca_adsp_glink: mca,adsp_glink {
+			compatible = "mca,adsp_glink";
+			status = "disabled";
 		};
 
 		ucsi: ucsi-glink {
@@ -3059,13 +3019,6 @@
 		compatible = "qcom,va-minidump";
 		memory-region = <&va_md_mem>;
 		status = "ok";
-	};
-
-	qcom_ramoops {
-		compatible = "qcom,ramoops";
-		memory-region = <&ramoops_mem>;
-		pmsg-size = <0x200000>;
-		mem-type = <2>;
 	};
 
 	qcom,mpm2-sleep-counter@c221000 {
@@ -3317,6 +3270,11 @@
 
 		pdp_scmi_perf: protocol@13 {
 			reg = <0x13>;
+			#clock-cells = <1>;
+		};
+
+		pdp_scmi_qcom: protocol@80 {
+			reg = <0x80>;
 			#clock-cells = <1>;
 		};
 	};
@@ -3782,22 +3740,13 @@
 		read-only;
 		ranges;
 
-		tz_dbg_en: tz_dbg_en@781 {
-			reg = <0x781 0x1>;
-			bits = <2 1>;
-		};
-
 		ssip_config: ssip_config@148 {
-			reg = <0x148 0x4>;
+			reg = <0x148 0x2>;
+			bit = <3 3>;
 		};
 
 		disp_qultiv_fuse:disp_qultiv_fuse@144 {
 			reg = <0x144 0x4>;
-		};
-
-		debugbus_en: debugbus_en@783 {
-			reg = <0x783 0x1>;
-			bits = <1 1>;
 		};
 
 		gpu_debug_bus_bin: gpu_debug_bus_bin@73 {
@@ -3810,15 +3759,11 @@
 			bits = <3 9>;
 		};
 
-		gpu_niden_en: gpu_niden_en@783 {
-			reg = <0x783 0x1>;
-			bits = <6 1>;
+		cpr_gfx_rc: cpr_gfx_rc@9dc {
+			reg = <0x9dc 0x2>;
+			bits = <6 4>;
 		};
 
-		cpr_gfx_rc: cpr_gfx_rc@999 {
-			reg = <0x999 0x1>;
-			bits = <0 3>;
-		};
 	};
 
 	cnss_audio_iommu_group0: cnss_audio_iommu_group0 {
@@ -3957,6 +3902,7 @@
 		compatible = "shared-dma-pool";
 		alloc-ranges = <0x0 0x00000000 0x0 0xffffffff>;
 		reusable;
+                guarantee;
 		alignment = <0x0 0x400000>;
 		size = <0x0 0x1400000>;
 	};
@@ -3965,6 +3911,7 @@
 		compatible = "shared-dma-pool";
 		alloc-ranges = <0x0 0x00000000 0x0 0xffffffff>;
 		reusable;
+                guarantee;
 		alignment = <0x0 0x400000>;
 		size = <0x0 0x1400000>;
 	};
@@ -4170,7 +4117,7 @@
 
 	adspslpi_mem: adspslpi_region@a1400000 {
 		no-map;
-		reg = <0x0 0xa1400000 0x0 0x4600000>;
+		reg = <0x0 0xa1400000 0x0 0x5580000>;
 	};
 
 	hypervisor_extended_heap_mem: hypervisor_extended_heap_region@0xc3dd0000 {
@@ -4184,7 +4131,7 @@
 
 	xbl_ramdump_mem: xbl_ramdump_region@d7800000 {
 		no-map;
-		reg = <0x0 0xd7800000 0x0 0x1c0000>;
+		reg = <0x0 0xd7800000 0x0 0x200000>;
 	};
 
 	global_sync_mem: global_sync_region@d7a00000 {
@@ -4201,15 +4148,17 @@
 	/* vm_kernel_memoem_configurable_mem was split into trust_ui_vm_mem & oem_vm_mem below */
 	trust_ui_vm_mem: trust_ui_vm_region@f3800000 {
 		compatible = "shared-dma-pool";
-		reg = <0x0 0xf3800000 0x0 0x4000000>;
+		reg = <0x0 0xf3800000 0x0 0x5000000>;
 		reusable;
+		guarantee;
 		alignment = <0x0 0x400000>;
 	};
 
-	oem_vm_mem: oem_vm_region@f7c00000 {
+	oem_vm_mem: oem_vm_region@f8800000 {
 		compatible = "shared-dma-pool";
-		reg = <0x0 0xf7c00000 0x0 0x4c00000>;
+		reg = <0x0 0xf8800000 0x0 0x3800000>;
 		reusable;
+		guarantee;
 		alignment = <0x0 0x400000>;
 	};
 
@@ -4219,6 +4168,18 @@
 		reusable;
 		alignment = <0x0 0x400000>;
 		size = <0x0 0x800000>;
+	};
+
+	dump_display_mem: dump_display_region@ff3ff800 {
+		reg = <0x0 0xff3ff800 0x0 0x800>;
+		no-map;
+	};
+
+	ramoops_mem: ramoops-region {
+		compatible = "ramoops";
+		reg = <0x0 0xff400000 0x0 0x400000>;
+		console-size = <0x200000>;
+		pmsg-size = <0x200000>;
 	};
 
 	llcc_lpi_mem: llcc_lpi_region@ff800000 {
@@ -4296,11 +4257,6 @@
 		size = <0 0x1000000>;
 	};
 
-	ramoops_mem: ramoops-region {
-		alloc-ranges = <0x1 0x00000000 0xfffffffe 0xffffffff>;
-		size = <0x0 0x200000>;
-		no-map;
-	};
 };
 
 #include "canoe-coresight.dtsi"

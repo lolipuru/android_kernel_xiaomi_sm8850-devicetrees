@@ -85,8 +85,9 @@
 			snps,dis-u1-entry-quirk;
 			snps,dis-u2-entry-quirk;
 			snps,dis_u2_susphy_quirk;
-			snps,dis_u3_susphy_quirk;
 			snps,ssp-u3-u0-quirk;
+			snps,usb2-lpm-disable;
+			snps,usb2-gadget-lpm-disable;
 			tx-fifo-resize;
 			num-hc-interrupters = /bits/ 16 <3>;
 			xhci-skip-phy-init-quirk;
@@ -114,7 +115,7 @@
 		vdd-supply = <&pmh0110_f_l4>;
 		qcom,vdd-voltage-level = <0 880000 880000>;
 		vdda12-supply = <&pmh0110_d_l1>;
-		vdd_refgen-supply = <&pmh0110_d_l3>;
+		vdd_refgen-supply = <&pmh0110_i_l3>;
 
 		clocks = <&rpmhcc RPMH_CXO_PAD_CLK>,
 			<&tcsrcc TCSR_USB2_CLKREF_EN>;
