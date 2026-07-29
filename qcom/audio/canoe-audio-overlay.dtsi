@@ -79,6 +79,13 @@
 
 	};
 
+	wsa2_macro: wsa2-macro@6AA0000 {
+
+		wsa_data_fs_ctl_reg = <0x6B6F000>;
+
+		qcom,wsa-bat-cfgs= <1>, <1>;
+		qcom,wsa-rloads= <2>, <2>;
+		qcom,wsa-system-gains= <0 9>, <0 9>;
 
 			wsa884x_2_0220: wsa884x@02170220 {
 				status = "disabled";
