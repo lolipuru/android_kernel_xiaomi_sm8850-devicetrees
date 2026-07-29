@@ -86,7 +86,7 @@
 		qcom_panel_supply_entry_1: qcom,panel-supply-entry@1 {
 			reg = <1>;
 			qcom,supply-name = "vdd";
-			qcom,supply-min-voltage = <1045000>;
+			qcom,supply-min-voltage = <1000000>;
 			qcom,supply-max-voltage = <1100000>;
 			qcom,supply-enable-load = <220000>;
 			qcom,supply-disable-load = <3>;
@@ -664,12 +664,13 @@
 	qcom,mdss-dsi-pan-enable-dynamic-fps;
 	qcom,mdss-dsi-pan-fps-update = "dfps_immediate_porch_mode_vfp";
 
-	qcom,esd-check-enabled;
+/*	qcom,esd-check-enabled;
 	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
 	qcom,mdss-dsi-panel-status-command = [06 01 00 01 00 00 01 0a];
 	qcom,mdss-dsi-panel-status-command-state = "dsi_lp_mode";
 	qcom,mdss-dsi-panel-status-value = <0x9c>;
 	qcom,mdss-dsi-panel-status-read-length = <1>;
+*/
 
 	qcom_mdss_dsi_display_timings_47: qcom,mdss-dsi-display-timings {
 		timing_0_48: timing@0 {
