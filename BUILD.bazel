@@ -13,6 +13,7 @@ kernel_dtstree(
             "qcom/**/*.dtso",
             "qcom/**/Makefile",
             "qcom/wlan/Kbuild",
+            "qcom/fingerprint/Kbuild",
             "qcom/**/*.h",
             "bindings/**/*",
         ],
