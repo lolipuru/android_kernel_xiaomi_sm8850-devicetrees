@@ -124,7 +124,7 @@
 };
 
 &tlmm {
-	cdc_dmic_enable_pinctrl: cdc_dmic_enable_pinctrl {
+	cdc_dmic_enable_pins: cdc_dmic_enable_pins {
 		cdc_dmic01_enable_active: cdc_dmic01_enable_active {
 			mux {
 				pins = "gpio164";
