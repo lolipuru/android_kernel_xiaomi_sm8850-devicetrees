@@ -662,7 +662,58 @@
 	/delete-property/ periph-d46-supply;
 };
 
+&pmk8850_gpios {
+	pinctrl-0 = <&div_clk_default>;
+	pinctrl-names = "default";
+
+	div_clk_default: div_clk_default {
+		pins = "gpio1";
+		function = "func2";
+		input-disable;
+		output-enable;
+		bias-disable;
+		power-source = <0>;
+	};
+};
+
+&pmh0110_f_gpios {
+	usb_dp_aux_cb_ls_1p2_active: usb-dp-aux-cb-1p2-active-state {
+		pins = "gpio9";
+		function = "paired";
+		input-enable;
+		output-disable;
+		power-source = <2>;
+	};
+
+	usb_dp_aux_cb_ls_1p8_active: usb-dp-aux-cb-1p8-active-state {
+		pins = "gpio10";
+		function = "paired";
+		input-disable;
+		output-enable;
+		power-source = <1>;
+	};
+
+	usb_dp_aux_en_ls_1p2_active: usb-dp-aux-en-1p2-active-state {
+		pins = "gpio5";
+		function = "paired";
+		input-enable;
+		output-disable;
+		power-source = <2>;
+	};
+
+	usb_dp_aux_en_ls_1p8_active: usb-dp-aux-en-1p8-active-state {
+		pins = "gpio6";
+		function = "paired";
+		input-disable;
+		output-enable;
+		power-source = <1>;
+	};
+};
+
 &usb0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&usb_dp_aux_en_ls_1p2_active>, <&usb_dp_aux_en_ls_1p8_active>,
+	            <&usb_dp_aux_cb_ls_1p2_active>, <&usb_dp_aux_cb_ls_1p8_active>;
 	qcom,wcd_usbss = <&wcd_usbss>;
 	wcd_equ = <0xC0>;
 	wcd_equ_host = <0xC0>;
