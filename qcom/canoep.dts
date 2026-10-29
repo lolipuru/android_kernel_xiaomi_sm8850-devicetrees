@@ -6,6 +6,20 @@
 /dts-v1/;
 
 #include "canoep.dtsi"
+#include "canoe-techpack-bindings.dtsi"
+#include "audio/canoe-audio.dtsi"
+#include "camera/canoe-camera.dtsi"
+#include "display/display/canoe-sde.dtsi"
+#include "dsp/canoe/canoe-dsp.dtsi"
+#include "eva/canoe-eva.dtsi"
+#include "graphics/gpu/canoe-gpu.dtsi"
+#include "graphics/gpu/canoe-gpu-pwrlevels.dtsi"
+#include "mm/hfi_core/canoe-hfi-core.dtsi"
+#include "mm/hw_fence/canoe-hw-fence.dtsi"
+#include "mmrm/canoe/canoe-mmrm-test.dtsi"
+#include "mmrm/canoe/canoe-mmrm.dtsi"
+#include "synx/synx/canoe-synx.dtsi"
+#include "video/canoe-vidc.dtsi"
 
 / {
 	model = "Qualcomm Technologies, Inc. CanoeP SoC";

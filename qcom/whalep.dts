@@ -6,6 +6,17 @@
 /dts-v1/;
 
 #include "whalep.dtsi"
+#include "canoe-techpack-bindings.dtsi"
+#include "audio/canoe-audio.dtsi"
+#include "display/display/canoe-sde.dtsi"
+#include "dsp/canoe/canoe-dsp_v2.dtsi"
+#include "eva/canoe-eva.dtsi"
+#include "graphics/gpu/whale-gpu.dtsi"
+#include "graphics/gpu/whale-gpu-pwrlevels.dtsi"
+#include "mm/hw_fence/canoe-hw-fence.dtsi"
+#include "mmrm/canoe/canoe-alana-mmrm.dtsi"
+#include "synx/synx/canoe-synx.dtsi"
+#include "video/canoe-vidc-v3.dtsi"
 
 / {
 	model = "Qualcomm Technologies, Inc. WhaleP SoC";

@@ -3740,6 +3740,11 @@
 		read-only;
 		ranges;
 
+		tz_dbg_en: tz_dbg_en@781 {
+			reg = <0x781 0x1>;
+			bits = <2 1>;
+		};
+
 		ssip_config: ssip_config@148 {
 			reg = <0x148 0x2>;
 			bit = <3 3>;
@@ -3747,6 +3752,11 @@
 
 		disp_qultiv_fuse:disp_qultiv_fuse@144 {
 			reg = <0x144 0x4>;
+		};
+
+		debugbus_en: debugbus_en@783 {
+			reg = <0x783 0x1>;
+			bits = <1 1>;
 		};
 
 		gpu_debug_bus_bin: gpu_debug_bus_bin@73 {
@@ -3762,6 +3772,11 @@
 		cpr_gfx_rc: cpr_gfx_rc@9dc {
 			reg = <0x9dc 0x2>;
 			bits = <6 4>;
+		};
+
+		gpu_niden_en: gpu_niden_en@783 {
+			reg = <0x783 0x1>;
+			bits = <6 1>;
 		};
 
 	};

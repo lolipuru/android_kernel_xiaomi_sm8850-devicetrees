@@ -6,6 +6,22 @@
 /dts-v1/;
 
 #include "canoe-tp-v2.dtsi"
+#include "canoe-techpack-bindings.dtsi"
+#include "audio/canoe-audio.dtsi"
+#include "camera/canoe-camera-v2.dtsi"
+#include "data/canoe-ipa.dtsi"
+#include "data/smem-mailbox.dtsi"
+#include "display/display/canoe-sde.dtsi"
+#include "dsp/canoe/canoe-dsp_v2.dtsi"
+#include "eva/canoe-eva.dtsi"
+#include "fingerprint/canoe-fingerprint.dtsi"
+#include "graphics/gpu/canoe-v2-gpu.dtsi"
+#include "graphics/gpu/canoe-v2-gpu-pwrlevels.dtsi"
+#include "mm/hfi_core/canoe-hfi-core.dtsi"
+#include "mm/hw_fence/canoe-hw-fence.dtsi"
+#include "mmrm/canoe/canoe-mmrm.dtsi"
+#include "synx/synx/canoe-synx.dtsi"
+#include "video/canoe-vidc-v2.dtsi"
 
 / {
 		model = "Qualcomm Technologies, Inc. Canoe Alt. Thermal Profile v2 SoC";
