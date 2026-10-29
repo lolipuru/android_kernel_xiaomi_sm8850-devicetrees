@@ -7,7 +7,6 @@
 		compatible = "qcom,alor-llcc";
 };
 
-/delete-node/ &qcom_qpace;
 /delete-node/ &spss_pas;
 /delete-node/ &qcom_spcom;
 /delete-node/ &spss_utils;
