@@ -16,7 +16,8 @@ dtbo-$(CONFIG_ARCH_CANOE)   += canoe-camera-v2.dtbo \
 	alor-camera-sensor-cdp.dtbo \
 	alor-camera-sensor-qrd.dtbo \
 	alor-camera-sensor-mtp-peach.dtbo \
-	alor-camera-sensor-rcm-peach.dtbo
+	alor-camera-sensor-rcm-peach.dtbo \
+	myron-sm8850-camera-sensor.dtbo
 dtbo-$(CONFIG_ARCH_CHORA) += chora-camera.dtbo \
 	chora-camera-sensor-mtp.dtbo \
 	chora-camera-sensor-qrd.dtbo \

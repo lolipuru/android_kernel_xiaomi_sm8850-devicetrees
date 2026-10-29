@@ -63,7 +63,8 @@ dtbo-y += canoe-audio.dtbo \
                 alor-audio-cdp.dtbo \
                 alor-audio-atp.dtbo \
                 alor-audio-rcm.dtbo \
-                alor-audio-rumi.dtbo
+                alor-audio-rumi.dtbo \
+                myron-audio-mtp.dtbo
 endif
 
 ifeq ($(CONFIG_ARCH_CHORA), y)

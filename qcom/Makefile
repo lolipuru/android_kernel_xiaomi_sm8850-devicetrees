@@ -43,7 +43,8 @@ CANOE_BOARDS += \
 		canoep-hdk-overlay.dtbo \
 		alor-interposer-mtp-overlay.dtbo \
 		alor-interposer-rcm-overlay.dtbo \
-		alor-interposer-qrd-st54l-pandeiro-overlay.dtbo
+		alor-interposer-qrd-st54l-pandeiro-overlay.dtbo \
+		myron-sm8850-overlay.dtbo
 
 NOAPQ_CANOE_BOARDS += \
 		canoe-rumi-overlay.dtbo
@@ -1224,3 +1225,5 @@ always-y        := $(dtb-y)
 subdir-y        := $(dts-dirs)
 subdir-y        += audio bt camera data display dsp eSE eva fingerprint graphics mm mmrm nfc securemsm synx video wlan
 clean-files     := *.dtb *.dtbo
+
+-include $(src)/dtbo_rules.mk
