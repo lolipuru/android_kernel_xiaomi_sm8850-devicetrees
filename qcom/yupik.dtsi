@@ -40,16 +40,6 @@
 
 	ddr-regions { };
 
-	mem-offline {
-		compatible = "qcom,mem-offline";
-		offline-sizes = <0x1 0x40000000 0x0 0x40000000>,
-			<0x1 0xc0000000 0x0 0x80000000>,
-			<0x2 0xc0000000 0x1 0x40000000>;
-		granule = <512>;
-		qcom,qmp = <&qmp_aop>;
-		ddr-old-version;
-	};
-
 	aliases: aliases {
 		ufshc1 = &ufshc_mem; /* Embedded UFS Slot */
 		mmc0 = &sdhc_1; /*SDC1 eMMC slot*/
@@ -1214,36 +1204,6 @@
 		status = "disabled";
 	};
 
-	bluetooth: bt_wcn6750 {
-		compatible = "qcom,wcn6750-bt";
-		pinctrl-names = "default";
-		pinctrl-0 = <&bt_en_sleep>;
-		qcom,bt-reset-gpio = <&tlmm 85 0>; /* BT_EN */
-		qcom,bt-sw-ctrl-gpio = <&tlmm 86 0>; /* SW_CTRL */
-		qcom,wl-reset-gpio = <&tlmm 84 0>; /* WL_EN */
-
-		qcom,bt-vdd-io-supply = <&L19B>;  /* IO */
-		qcom,bt-vdd-aon-supply = <&S7B>;
-		qcom,bt-vdd-dig-supply = <&S7B>;
-		qcom,bt-vdd-rfacmn-supply = <&S7B>;
-		qcom,bt-vdd-rfa-0p8-supply = <&S7B>;
-		qcom,bt-vdd-rfa1-supply = <&S1B>; /*RFA 1p7*/
-		qcom,bt-vdd-rfa2-supply = <&S8B>; /*RFA 1p2*/
-		qcom,bt-vdd-ipa-2p2-supply = <&S1C>; /*IPA 2p2*/
-		qcom,bt-vdd-asd-supply = <&L11C>;
-
-		/* max voltage are set to regulator max voltage supported */
-		qcom,bt-vdd-io-config = <1800000 2000000 0 1>;
-		qcom,bt-vdd-aon-config = <824000 1120000 0 1>;
-		qcom,bt-vdd-dig-config = <824000 1120000 0 1>;
-		qcom,bt-vdd-rfacmn-config  = <824000 1120000 0 1>;
-		qcom,bt-vdd-rfa-0p8-config  = <824000 1120000 0 1>;
-		qcom,bt-vdd-rfa1-config = <1872000 2040000 0 1>;
-		qcom,bt-vdd-rfa2-config = <1256000 1500000 0 1>;
-		qcom,bt-vdd-ipa-2p2-config = <2200000 2210000 0 1>;
-		qcom,bt-vdd-asd-config = <2800000 3544000 0 1>;
-	};
-
 	vendor_hooks: qcom,cpu-vendor-hooks {
 		compatible = "qcom,cpu-vendor-hooks";
 	};
@@ -1571,20 +1531,35 @@
 	};
 
 	ddr_freq_table: ddr-freq-table {
-		qcom,freq-tbl =
-			<  200000 >,
-			<  451000 >,
-			<  547000 >,
-			<  681000 >,
-			<  768000 >,
-			< 1017000 >,
-			< 1353000 >,
-			< 1555000 >,
-			< 1708000 >,
-			< 2092000 >,
-			< 2133000 >,
-			< 2736000 >,
-			< 3196000 >;
+		ddr4 {
+			qcom,ddr-type = <7>;
+			qcom,freq-tbl =
+				<  200000 >,
+				<  451000 >,
+				<  547000 >,
+				<  681000 >,
+				<  768000 >,
+				< 1017000 >,
+				< 1353000 >,
+				< 1555000 >,
+				< 1708000 >,
+				< 2092000 >;
+		};
+
+		ddr5 {
+			qcom,ddr-type = <8>;
+			qcom,freq-tbl =
+				<  200000 >,
+				<  451000 >,
+				<  547000 >,
+				<  681000 >,
+				<  768000 >,
+				< 1555000 >,
+				< 1708000 >,
+				< 2092000 >,
+				< 2736000 >,
+				< 3196000 >;
+		};
 	};
 
 	ddrqos_freq_table: ddrqos-freq-table {
@@ -1700,7 +1675,7 @@
 						< 1228800 1017000 >,
 						< 1651200 1555000 >,
 						< 2380800 1708000 >,
-						< 2707200 2133000 >;
+						< 2707200 2092000 >;
 				};
 
 				ddr5-tbl {
@@ -1741,7 +1716,7 @@
 						< 1651200 1017000 >,
 						< 1900800 1555000 >,
 						< 2400000 1708000 >,
-						< 2707200 2133000 >;
+						< 2707200 2092000 >;
 				};
 
 				ddr5-tbl {
@@ -1767,7 +1742,7 @@
 					qcom,ddr-type = <7>;
 					qcom,cpufreq-memfreq-tbl =
 						< 2380800  451000 >,
-						< 2707200 2133000 >;
+						< 2707200 2092000 >;
 				};
 
 				ddr5-tbl {

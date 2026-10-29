@@ -297,7 +297,7 @@
 		clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
 		clock-names = "apb_pclk";
 
-		qcom,cmb-element-bits = <64>;
+		qcom,cmb-element-bits = <32>;
 		out-ports {
 			port {
 				tpdm_prng_out_tpda_qdss: endpoint {

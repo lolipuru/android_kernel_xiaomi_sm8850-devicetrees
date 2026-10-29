@@ -381,6 +381,10 @@
 	qcom,mdss-dsi-panel-status-value = <0x9c>;
 	qcom,mdss-dsi-panel-status-read-length = <1>;
 
+	/delete-property/ qcom,mdss-dsi-panel-name;
+	qcom,mdss-dsi-panel-name =
+		"ft8726 lcd video mode dsi focaltech panel with DSC bourtzi";
+
 	qcom_mdss_dsi_display_timings_23: qcom,mdss-dsi-display-timings {
 		timing_0_24: timing@0 {
 			qcom,mdss-dsi-panel-phy-timings = [00 1c 07 07 17 15 07
@@ -408,6 +412,9 @@
 	qcom,mdss-dsi-panel-status-value = <0x9c>;
 	qcom,mdss-dsi-panel-status-read-length = <1>;
 
+	/delete-property/ qcom,mdss-dsi-panel-name;
+	qcom,mdss-dsi-panel-name =
+		"ft8726 lcd video mode dsi focaltech panel with DSC bourtzi";
 	qcom_mdss_dsi_display_timings_25: qcom,mdss-dsi-display-timings {
 		timing_0_26: timing@0 {
 			qcom,mdss-dsi-panel-phy-timings = [00 16 05 05 14 1f 06
@@ -430,6 +437,9 @@
 	qcom,mdss-dsi-panel-status-value = <0x9c>;
 	qcom,mdss-dsi-panel-status-read-length = <1>;
 
+	/delete-property/ qcom,mdss-dsi-panel-name;
+	qcom,mdss-dsi-panel-name =
+		"ft8726 lcd video mode dsi focaltech panel with DSC bourtzi";
 	qcom_mdss_dsi_display_timings_27: qcom,mdss-dsi-display-timings {
 		timing_0_28: timing@0 {
 			qcom,mdss-dsi-panel-phy-timings = [00 10 03 03 11 1e 04
@@ -442,6 +452,8 @@
 
 &dsi_vtdr6130_amoled_cmd {
 	qcom,dsi-select-clocks = "pll_byte_clk0", "pll_dsi_clk0";
+
+	qcom,dsi-dyn-clk-enable;
 
 	qcom,esd-check-enabled;
 	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
@@ -460,32 +472,37 @@
 				07 08 02 04 00 19 0c];
 			qcom,display-topology = <1 1 1>;
 			qcom,default-topology-index = <0>;
+			qcom,dsi-dyn-clk-list = <813936000 818175250 822414500>;
 		};
+
 		timing_1_31: timing@1 {
 			qcom,mdss-dsi-panel-phy-timings = [00 1c 08 07 17 22 07
 				07 08 02 04 00 19 0c];
 			qcom,display-topology = <1 1 1>;
 			qcom,default-topology-index = <0>;
+			qcom,dsi-dyn-clk-list = <813936000 818175250 822414500>;
 		};
+
 		timing_2_32: timing@2 {
 			qcom,mdss-dsi-panel-phy-timings = [00 1c 08 07 17 22 07
 				07 08 02 04 00 19 0c];
 			qcom,display-topology = <1 1 1>;
 			qcom,default-topology-index = <0>;
+			qcom,dsi-dyn-clk-list = <813936000 818175250 822414500>;
 		};
+
 		timing_3: timing@3 {
 			qcom,mdss-dsi-panel-phy-timings = [00 1c 08 07 17 22 07
 				07 08 02 04 00 19 0c];
 			qcom,display-topology = <1 1 1>;
 			qcom,default-topology-index = <0>;
+			qcom,dsi-dyn-clk-list = <813936000 818175250 822414500>;
 		};
 	};
 };
 
 &dsi_vtdr6130_amoled_120hz_cmd {
 	qcom,dsi-select-clocks = "pll_byte_clk0", "pll_dsi_clk0";
-
-	qcom,dsi-dyn-clk-enable;
 
 	qcom,esd-check-enabled;
 	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
@@ -504,21 +521,18 @@
 				06 07 02 04 00 16 0b];
 			qcom,display-topology = <1 1 1>;
 			qcom,default-topology-index = <0>;
-			qcom,dsi-dyn-clk-list = <706233600 703290960 700348320>;
 		};
 		timing_1_35: timing@1 {
 			qcom,mdss-dsi-panel-phy-timings = [00 19 06 06 15 20 07
 				06 07 02 04 00 16 0b];
 			qcom,display-topology = <1 1 1>;
 			qcom,default-topology-index = <0>;
-			qcom,dsi-dyn-clk-list = <706233600 703290960 700348320>;
 		};
 		timing_2_36: timing@2 {
 			qcom,mdss-dsi-panel-phy-timings = [00 19 06 06 15 20 07
 				06 07 02 04 00 16 0b];
 			qcom,display-topology = <1 1 1>;
 			qcom,default-topology-index = <0>;
-			qcom,dsi-dyn-clk-list = <706233600 703290960 700348320>;
 		};
 	};
 };

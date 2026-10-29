@@ -32,6 +32,37 @@
 	vreg-3p3-supply = <&nvme_vreg>;
 };
 
+&ucsi {
+	connector@0 {
+		compatible = "usb-c-connector";
+		reg = <0>;
+
+		power-role = "dual";
+		data-role = "dual";
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			port@0 {
+				reg = <0>;
+
+				pmic_glink_hs_in: endpoint {
+					remote-endpoint = <&usb_ss0_dwc3_hs>;
+				};
+			};
+
+			port@1 {
+				reg = <1>;
+
+				pmic_glink_ss_in: endpoint {
+					remote-endpoint = <&usb_ss0_qmpphy_out>;
+				};
+			};
+		};
+	};
+};
+
 &smb2370_0_eusb2_repeater {
 	status = "okay";
 	vdd18-supply = <&L15B_E0>;
@@ -43,12 +74,19 @@
 	status = "okay";
 };
 
-&usb_ss0 {
+&usb3_phy_0 {
 	status = "okay";
 };
 
-&dwc3_0 {
+&usb_ss0 {
 	status = "okay";
-	dr_mode = "peripheral";
-	maximum-speed = "high-speed";
+	usb-role-switch;
+};
+
+&usb_ss0_qmpphy_out {
+	remote-endpoint = <&pmic_glink_ss_in>;
+};
+
+&usb_ss0_dwc3_hs {
+	remote-endpoint = <&pmic_glink_hs_in>;
 };

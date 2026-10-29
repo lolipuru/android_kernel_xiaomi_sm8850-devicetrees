@@ -400,7 +400,7 @@
 				<GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>,
 				<GIC_SPI 688 IRQ_TYPE_LEVEL_HIGH>,
 				<GIC_SPI 700 IRQ_TYPE_LEVEL_HIGH>;
-		status = "disabled";
+		status = "ok";
 	};
 
 	kgsl_smmu_1: iommu@98a0000 {

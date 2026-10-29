@@ -12,8 +12,8 @@
 		reg = <0xa600000 0x100000>;
 		reg-names = "core_base";
 
-		#address-cells = <1>;
-		#size-cells = <1>;
+		#address-cells = <2>;
+		#size-cells = <2>;
 		ranges;
 
 		USB3_GDSC-supply = <&gcc_usb30_prim_gdsc>;
@@ -55,13 +55,13 @@
 				<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_USB3_0>;
 		extcon = <&eud>;
 
-		dwc3@a600000 {
+		dwc3_0: dwc3@a600000 {
 			compatible = "snps,dwc3";
-			reg = <0xa600000 0xd93c>;
+			reg = <0x0 0xa600000 0x0 0xd93c>;
 
 			iommus = <&apps_smmu 0x0 0x0>;
 			qcom,iommu-dma = "atomic";
-			qcom,iommu-dma-addr-pool = <0x90000000 0x60000000>;
+			memory-region = <&dwc3_mem_region>;
 			dma-coherent;
 
 			interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
@@ -76,39 +76,17 @@
 			snps,dis_u3_susphy_quirk;
 			snps,ssp-u3-u0-quirk;
 			tx-fifo-resize;
+			num-hc-interrupters = /bits/ 16 <3>;
 			dr_mode = "otg";
 			maximum-speed = "super-speed-plus";
 			usb-role-switch;
 		};
 
-		qcom,usbbam@a704000 {
-			compatible = "qcom,usb-bam-msm";
-			reg = <0xa704000 0x18000>;
-			interrupts = <GIC_SPI 132 IRQ_TYPE_LEVEL_HIGH>;
+	};
 
-			qcom,usb-bam-fifo-baseaddr = <0x146a6000>;
-			qcom,usb-bam-num-pipes = <4>;
-			qcom,disable-clk-gating;
-			qcom,usb-bam-override-threshold = <0x4001>;
-			qcom,usb-bam-max-mbps-highspeed = <400>;
-			qcom,usb-bam-max-mbps-superspeed = <3600>;
-			qcom,reset-bam-on-connect;
-
-			qcom,pipe0 {
-				label = "ssusb-qdss-in-0";
-				qcom,usb-bam-mem-type = <2>;
-				qcom,dir = <1>;
-				qcom,pipe-num = <0>;
-				qcom,peer-bam = <0>;
-				qcom,peer-bam-physical-address = <0x10064000>;
-				qcom,src-bam-pipe-index = <0>;
-				qcom,dst-bam-pipe-index = <0>;
-				qcom,data-fifo-offset = <0x0>;
-				qcom,data-fifo-size = <0x1800>;
-				qcom,descriptor-fifo-offset = <0x1800>;
-				qcom,descriptor-fifo-size = <0x800>;
-			};
-		};
+	dwc3_mem_region: dwc3_mem_region {
+		iommu-addresses = <&dwc3_0 0x0 0x0 0x0 0x90000000>,
+				<&dwc3_0 0x0 0xf0000000 0xffffffff 0x10000000>;
 	};
 
 	/* USB port related High Speed PHY */

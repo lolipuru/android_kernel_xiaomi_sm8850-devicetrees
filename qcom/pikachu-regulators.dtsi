@@ -52,7 +52,7 @@
 			qcom,set = <RPMH_REGULATOR_SET_ALL>;
 			pmar2230_a_s2_level-parent-supply =
 				<&VDD_CX_MMCX_SUPPLY_LEVEL>;
-			regulator-min-microvolt = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1>;
+			regulator-min-microvolt = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1_1>;
 			regulator-max-microvolt = <RPMH_REGULATOR_LEVEL_MAX>;
 			qcom,init-voltage-level = <RPMH_REGULATOR_LEVEL_TURBO>;
 			proxy-supply = <&VDD_MMCX_LEVEL>;
@@ -65,17 +65,17 @@
 		pmar2230_a_s2_level_ao: regulator-pmar2230-a-s2-level-ao {
 			regulator-name = "pmar2230_a_s2_level_ao";
 			qcom,set = <RPMH_REGULATOR_SET_ACTIVE>;
-			regulator-min-microvolt = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1>;
+			regulator-min-microvolt = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1_1>;
 			regulator-max-microvolt = <RPMH_REGULATOR_LEVEL_MAX>;
-			qcom,init-voltage-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1>;
+			qcom,init-voltage-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1_1>;
 		};
 
 		regulator-pmar2230-a-s2-level-so {
 			regulator-name = "pmar2230_a_s2_level_so";
 			qcom,set = <RPMH_REGULATOR_SET_SLEEP>;
-			regulator-min-microvolt = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1>;
+			regulator-min-microvolt = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1_1>;
 			regulator-max-microvolt = <RPMH_REGULATOR_LEVEL_MAX>;
-			qcom,init-voltage-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1>;
+			qcom,init-voltage-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1_1>;
 		};
 	};
 

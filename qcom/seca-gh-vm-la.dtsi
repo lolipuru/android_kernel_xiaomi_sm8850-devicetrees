@@ -1277,32 +1277,51 @@
 				};
 			};
 
-
-			hab-virq5-dbl {
+			hab_virq_dbl5 {
 				vdevice-type = "doorbell";
-				generate = "/hypervisor/hab-virq5-dbl";
+				generate = "/hypervisor/hab_virq_5";
 				qcom,label = <0x5>;
+				push-compatible = "qcom,msm-virt_irq";
 				peer-default;
 			};
 
-			hab-virq5-dbl-source {
-				vdevice-type = "doorbell-source";
-				generate = "/hypervisor/hab-virq5-dbl-source";
-				qcom,label = <0x5>;
-				peer-default;
-			};
-
-			hab-virq6-dbl {
+			hab_virq_dbl6 {
 				vdevice-type = "doorbell";
-				generate = "/hypervisor/hab-virq6-dbl";
+				generate = "/hypervisor/hab_virq_6";
 				qcom,label = <0x6>;
+				push-compatible = "qcom,msm-virt_irq";
 				peer-default;
 			};
 
-			hab-virq6-dbl-source {
-				vdevice-type = "doorbell-source";
-				generate = "/hypervisor/hab-virq6-dbl-source";
-				qcom,label = <0x6>;
+			hab_virq_dbl9 {
+				vdevice-type = "doorbell";
+				generate = "/hypervisor/hab_virq_9";
+				qcom,label = <0x9>;
+				push-compatible = "qcom,msm-virt_irq";
+				peer-default;
+			};
+
+			hab_virq_dbl10 {
+				vdevice-type = "doorbell";
+				generate = "/hypervisor/hab_virq_a";
+				qcom,label = <0xa>;
+				push-compatible = "qcom,msm-virt_irq";
+				peer-default;
+			};
+
+			hab_virq_dbl11 {
+				vdevice-type = "doorbell";
+				generate = "/hypervisor/hab_virq_b";
+				qcom,label = <0xb>;
+				push-compatible = "qcom,msm-virt_irq";
+				peer-default;
+			};
+
+			hab_virq_dbl12 {
+				vdevice-type = "doorbell";
+				generate = "/hypervisor/hab_virq_c";
+				qcom,label = <0xc>;
+				push-compatible = "qcom,msm-virt_irq";
 				peer-default;
 			};
 
@@ -1512,7 +1531,7 @@
 	};
 
 	tlmm: pinctrl@f000000 {
-		compatible = "qcom,sa8797p-tlmm";
+		compatible = "qcom,seca-tlmm";
 		reg = <0xf000000 0x1000000>;
 		interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
 		gpio-controller;
@@ -1532,8 +1551,15 @@
 		#interrupt-cells = <0x3>;
 		#redistributor-regions = <1>;
 		redistributor-stride = <0x0 0x20000>;
-		reg = <0x17a00000 0x10000>,     /* GICD */
-		      <0x17a60000 0x240000>;    /* GICR * 18 */
+		reg = <0x17a00000 0x10000>, /* GICD */
+		      <0x17a60000 0x240000>; /* GICR * 18 */
+		interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
+		gic_its: msi-controller@0x17040000 {
+			compatible = "arm,gic-v3-its";
+			msi-controller;
+			#msi-cells = <1>;
+			reg = <0x17040000 0x20000>;
+		};
 	};
 
 	wdog: qcom,wdt@17826000 {
@@ -1660,7 +1686,6 @@
 	hab: qcom,hab {
 		compatible = "qcom,hab";
 		vmid = <2>;
-		virt-irq = <0x4 0x5 0x6>;
 
 		mmidgrp100: mmidgrp100 {
 			grp-start-id = <100>;
@@ -1782,6 +1807,17 @@
 		interrupt-controller;
 	};
 
+	qcom,test-dbl-gvm1 {
+		compatible = "qcom,gh-dbl";
+		qcom,label = <0x4>;
+	};
+
+	qcom,test-msgq-gvm1 {
+		compatible = "qcom,gh-msgq-test";
+		gunyah-label = <4>;
+		affinity = <0>;
+	};
+
 	qcom,gh-qtimer@17C25000 {
 		compatible = "qcom,gh-qtmr";
 		reg = <0x17425000 0x1000>;
@@ -1817,6 +1853,21 @@
 	};
 };
 
+&remoteproc_hpass0_glink {
+	qcom,fastrpc {
+		label = "hpass";
+		instance-id = <0>;
+		dsp-type = <5>;
+	};
+};
+
+&remoteproc_hpass1_glink {
+	qcom,fastrpc {
+		label = "hpass";
+		instance-id = <1>;
+		dsp-type = <5>;
+	};
+};
 
 / {
 	rename_devices: rename_devices {

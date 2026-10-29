@@ -12,7 +12,7 @@
 	model = "Qualcomm Technologies, Inc. Shikra SVM ATP";
 	compatible = "qcom,shikra-atp", "qcom,shikra", "qcom,shikrap-atp",
 			"qcom,shikrap", "qcom,atp";
-	qcom,board-id = <0 0>, <0x10021 0x0>, <0x20033 0x01>, <0x20033 0x0>, <0x10033 0x0>;
+	qcom,board-id = <0x10021 0x0>, <0x20021 0x0>;
 
 	host {
 	};

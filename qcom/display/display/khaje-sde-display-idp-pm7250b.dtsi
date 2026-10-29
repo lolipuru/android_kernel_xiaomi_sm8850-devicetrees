@@ -26,3 +26,18 @@
         qcom,platform-en-gpio = <&pm7250b_gpios 5 0>;
         qcom,platform-bklight-en-gpio = <&pm7250b_gpios 1 0>;
 };
+
+&dsi_ft8726_fhd_plus_60_video {
+	qcom,platform-en-gpio = <&pm7250b_gpios 5 0>;
+	qcom,platform-bklight-en-gpio = <&pm7250b_gpios 1 0>;
+};
+
+&dsi_ft8726_fhd_plus_90_video {
+	qcom,platform-en-gpio = <&pm7250b_gpios 5 0>;
+	qcom,platform-bklight-en-gpio = <&pm7250b_gpios 1 0>;
+};
+
+&dsi_ft8726_fhd_plus_120_video {
+	qcom,platform-en-gpio = <&pm7250b_gpios 5 0>;
+	qcom,platform-bklight-en-gpio = <&pm7250b_gpios 1 0>;
+};

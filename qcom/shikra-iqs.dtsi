@@ -4,7 +4,11 @@
  */
 
 #include "shikra.dtsi"
-#include "shikra-pmic-overlay-pm4125.dtsi"
+#include "shikra-pm8150-regulator.dtsi"
+#include "shikra-pcie.dtsi"
+#include "shikra-usb.dtsi"
+#include "shikra-pmic-overlay-pm8150.dtsi"
+#include "shikra-iqs-usb.dtsi"
 
 / {
 	model = "Qualcomm Technologies, Inc. Shikra IQS SoC";

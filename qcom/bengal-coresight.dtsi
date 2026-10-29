@@ -80,6 +80,7 @@
 
 		device-name = "tpdm_center";
 		qcom,dsb-element-bits = <32>;
+		qcom,dsb-msrs-num = <16>;
 
 		clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
 		clock-names = "apb_pclk";
@@ -243,6 +244,8 @@
 		reg-names = "tpdm-base";
 
 		device-name = "tpdm_turing";
+		qcom,dsb-element-bits = <32>;
+		qcom,dsb-msrs-num = <16>;
 
 		clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
 		clock-names = "apb_pclk";
@@ -376,6 +379,7 @@
 
 		device-name = "tpdm_west";
 		qcom,dsb-element-bits = <32>;
+		qcom,dsb-msrs-num = <16>;
 
 		clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
 		clock-names = "apb_pclk";
@@ -420,6 +424,7 @@
 		device-name = "tpdm_mapss";
 		qcom,cmb-element-bits = <32>;
 		qcom,dsb-element-bits = <32>;
+		qcom,dsb-msrs-num = <16>;
 
 		clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
 		clock-names = "apb_pclk";
@@ -656,6 +661,7 @@
 
 		device-name = "tpdm_llm_silver";
 		qcom,cmb-element-bits = <32>;
+		qcom,cmb-msrs-num = <12>;
 
 		clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
 		clock-names = "apb_pclk";
@@ -677,6 +683,7 @@
 
 		device-name = "tpdm_apss";
 		qcom,dsb-element-bits = <32>;
+		qcom,dsb-msrs-num = <8>;
 
 		clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
 		clock-names = "apb_pclk";
@@ -1034,10 +1041,10 @@
 		reg-names = "funnel-base";
 
 		device-name = "funnel_turing";
-		qcom,dsb-element-bits = <0 32>;
 
 		clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
 		clock-names = "apb_pclk";
+
 		out-ports {
 			port@0 {
 				reg = <0>;
@@ -1532,6 +1539,7 @@
 
 		coresight-ctis = <&cti0>;
 		coresight-csr = <&csr>;
+		csr-atid-offset = <0xf8>;
 		csr-irqctrl-offset = <0x6c>;
 		byte-cntr-name = "byte-cntr";
 		byte-cntr-class-name = "coresight-tmc-etr-stream";

@@ -20,9 +20,10 @@
 		#address-cells = <1>;
 		#size-cells = <0>;
 
-		pmi632_revid: qcom,revid@100 {
-			compatible = "qcom,qpnp-revid";
+		pmic-ecid@100 {
+			compatible = "qcom,pmic-ecid";
 			reg = <0x100>;
+			qcom,pmic-name = "pmi632";
 		};
 
 		pmi632_pon: qcom,power-on@800 {

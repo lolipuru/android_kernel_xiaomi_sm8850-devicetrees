@@ -234,10 +234,22 @@
 			output-high;
 		};
 
+		sx1508q_lcd0_vdd_1v8_sleep: sx1508q_lcd0_vdd_1v8_sleep {
+			pins = "gpio6";
+			bias-disable;
+			output-low;
+		};
+
 		sx1508q_lcd0_vsp_active: sx1508q_lcd0_vsp_active {
 			pins = "gpio7";
 			bias-disable;
 			output-high;
+		};
+
+		sx1508q_lcd0_vsp_sleep: sx1508q_lcd0_vsp_sleep {
+			pins = "gpio7";
+			bias-disable;
+			output-low;
 		};
 	};
 
@@ -255,10 +267,22 @@
 			output-high;
 		};
 
+		sx1508q_lcd0_vsn_sleep: sx1508q_lcd0_vsn_sleep {
+			pins = "gpio1";
+			bias-disable;
+			output-low;
+		};
+
 		sx1508q_lcd0_bl_active: sx1508q_lcd0_bl_active {
 			pins = "gpio3";
 			bias-disable;
 			output-high;
+		};
+
+		sx1508q_lcd0_bl_sleep: sx1508q_lcd0_bl_sleep {
+			pins = "gpio3";
+			bias-disable;
+			output-low;
 		};
 
 		sx1508_cam1_pwdn_active: sx1508_cam1_pwdn_active {
@@ -280,6 +304,12 @@
 			pins = "gpio7";
 			bias-disable;
 			output-high;
+		};
+
+		sx1508_touch_power_sleep: sx1508_touch_power_sleep {
+			pins = "gpio7";
+			bias-disable;
+			output-low;
 		};
 	};
 
@@ -324,8 +354,9 @@
 		irq-gpios = <&tlmm 3 0x2002>;
 		reset-gpios = <&tlmm 2 0>;
 
-		pinctrl-names = "default";
+		pinctrl-names = "default", "sleep";
 		pinctrl-0 = <&sx1508_touch_power_active>;
+		pinctrl-1 = <&sx1508_touch_power_sleep>;
 
 		goodix,config-name = "gt1151_cfg.bin";
 	};

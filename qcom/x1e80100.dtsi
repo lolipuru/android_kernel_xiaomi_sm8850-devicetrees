@@ -2127,6 +2127,7 @@
 			interconnects = <&aggre1_noc MASTER_USB3_0 0 &mc_virt SLAVE_EBI1 0>,
 					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_0 0>;
 
+			wakeup-source;
 			/*
 			 * Establish dependency on smmu driver so that depopulate path of
 			 * deferred probe doesn't run into existing bug in smmu driver.
@@ -2202,7 +2203,7 @@
 			vdda12-supply = <&L2J>;
 
 			clocks = <&xo_board>,
-				<&tcsrcc TCSR_USB2_1_CLKREF_EN>;
+				 <&rpmhcc RPMH_CXO_CLK>;
 			clock-names = "ref_clk_src", "ref";
 
 			#phy-cells = <0>;
@@ -2318,6 +2319,7 @@
 			qcom,use-eusb2-phy;
 			qcom,host-poweroff-in-pm-suspend;
 			qcom,default-mode-host;
+			qcom,disable-host-ssphy-powerdown;
 
 			qcom,dis-sending-cm-l1-quirk;
 			qcom,core-clk-rate = <120000000>;
@@ -2375,7 +2377,7 @@
 			vdda12-supply = <&L3E>;
 
 			clocks = <&xo_board>,
-				<&tcsrcc TCSR_USB2_2_CLKREF_EN>;
+				 <&rpmhcc RPMH_CXO_CLK>;
 			clock-names = "ref_clk_src", "ref";
 
 			#phy-cells = <0>;
@@ -2434,6 +2436,8 @@
 			interconnect-names = "usb-ddr", "ddr-usb";
 			interconnects = <&usb_south_anoc MASTER_USB3_1 &mc_virt SLAVE_EBI1>,
 					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_USB3_1>;
+
+			wakeup-source;
 
 			/*
 			 * Establish dependency on smmu driver so that depopulate path of
@@ -2510,7 +2514,7 @@
 			vdda12-supply = <&L2J>;
 
 			clocks = <&xo_board>,
-				<&tcsrcc TCSR_USB2_1_CLKREF_EN>;
+				 <&rpmhcc RPMH_CXO_CLK>;
 			clock-names = "ref_clk_src", "ref";
 
 			#phy-cells = <0>;
@@ -2989,10 +2993,27 @@
 			qcom,low-latency;
 		};
 
+		/* QRTR MHI entry for SDX35 */
+		qcom,qrtr-mhi-cnss3 {
+			compatible = "qcom,qrtr-mhi";
+			qcom,dev-id = <0x110a>;
+			qcom,net-id = <0>;
+			qcom,low-latency;
+		};
+
+		/* QRTR MHI entry for SDX65 */
 		qcom,qrtr-mhi-cnss2 {
 			compatible = "qcom,qrtr-mhi";
 			qcom,dev-id = <0x0308>;
-			qcom,net-id = <1>;
+			qcom,net-id = <0>;
+			qcom,low-latency;
+		};
+
+		/* QRTR MHI entry for SDX81 */
+		qcom,qrtr-mhi-cnss4 {
+			compatible = "qcom,qrtr-mhi";
+			qcom,dev-id = <0x0309>;
+			qcom,net-id = <0>;
 			qcom,low-latency;
 		};
 

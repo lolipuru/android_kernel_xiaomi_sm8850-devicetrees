@@ -34,7 +34,7 @@
 	memory { device_type = "memory"; reg = <0x0 0x38000000 0x0 0xa00000>; };
 
 	chosen: chosen {
-		bootargs = "loglevel=6 log_buf_len=256K bootconfig swiotlb=0 kasan=off cgroup_disable=pressure cgroup.memory=nokmem,nosocket disable_dma32=on restrict_cma_redirect=false pci=pcie_bus_safe,noaer pcie_pme=nomsi printk.console_no_auto_verbose=1 rcupdate.rcu_expedited=1 rcu_nocbs=0-4 kernel.panic_on_rcu_stall=1 no-steal-acc ftrace_dump_on_oops can.stats_timer=0 fw_devlink.strict=1 service_locator.enable=1 firmware_class.path=/vendor/firmware_mnt/image,/vendor/firmware irqaffinity=0-1 loop.max_part=7 cpufreq.default_governor=performance android_arch_task_struct_size=512 no-steal-acc hibernate=nocompress pci-msm-drv.pcie_sm_regs=0x1D07000,0x1040,0x1048,0x3000,0x2 net.ifnames=0";
+		bootargs = "loglevel=6 log_buf_len=256K bootconfig swiotlb=0 kasan=off cgroup_disable=pressure cgroup.memory=nokmem,nosocket disable_dma32=on restrict_cma_redirect=false pci=pcie_bus_safe,noaer pcie_pme=nomsi printk.console_no_auto_verbose=1 rcupdate.rcu_expedited=1 rcu_nocbs=0-4 kernel.panic_on_rcu_stall=1 no-steal-acc ftrace_dump_on_oops can.stats_timer=0 fw_devlink.strict=1 service_locator.enable=1 firmware_class.path=/vendor/firmware_mnt/image,/vendor/firmware irqaffinity=0-1 loop.max_part=7 cpufreq.default_governor=performance android_arch_task_struct_size=512 no-steal-acc pci-msm-drv.pcie_sm_regs=0x1D07000,0x1040,0x1048,0x3000,0x2 net.ifnames=0 hibernate.compressor=lz4";
 	};
 
 	reserved_memory: reserved-memory {};
@@ -336,11 +336,19 @@
 		compatible = "arm,gic-v3";
 		#interrupt-cells = <3>;
 		interrupt-controller;
+		ranges;
 		#redistributor-regions = <1>;
 		redistributor-stride = <0x0 0x20000>;
 		reg = <0x17200000 0x10000>,       /* GICD */
 		     <0x17260000 0xA0000>;       /* GICR * 5 */
 		interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
+
+		gic_its: msi-controller@17240000 {
+			compatible = "arm,gic-v3-its";
+			msi-controller;
+			#msi-cells = <1>;
+			reg = <0x17240000 0x20000>;
+		};
 	};
 
 	arch_timer: timer {
@@ -2022,10 +2030,10 @@
 
 		slc_perfmon: qcom,slc_perfmon {
 			compatible = "qcom,slc-perfmon";
-			/* Use slc_mem_base (0xD8170000) with perfmon struct at offset 0x700 */
-			reg = <0xD8170000 0x1000>, <0x25000000 0x60000>, <0x25400000 0x60000>, <0x25800000 0x60000>;
+			/* Dedicated perfmon shared mem region, perfmon struct at offset 0x0 */
+			reg = <0xd8171000 0x1000>, <0x25000000 0x60000>, <0x25400000 0x60000>, <0x25800000 0x60000>;
 			reg-names = "perfmon_base", "trp_0_base", "trp_1_base", "trp_or_bcast_base";
-			perfmon_offset = <0x700>;
+			perfmon_offset = <0x0>;
 			clocks = <&aoss_qmp QDSS_CLK>;
 			clock-names = "qdss_clk";
 			slc-scid-status-snapshot;
@@ -2596,6 +2604,11 @@
 	qcom_scm {
 		compatible = "qcom,scm";
 		qcom,dload-mode = <&tcsr 0x99000>;
+	};
+
+	qcom,hdcp {
+		compatible = "qcom,hdcp";
+		qcom,use-smcinvoke = <1>;
 	};
 };
 

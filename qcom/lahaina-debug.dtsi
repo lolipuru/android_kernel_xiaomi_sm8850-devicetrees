@@ -11,9 +11,7 @@
 	ranges;
 
 	dump_mem: mem_dump_region {
-		compatible = "shared-dma-pool";
 		alloc-ranges = <0x0 0x00000000 0x0 0xffffffff>;
-		reusable;
 		size = <0 0x3000000>;
 	};
 };
@@ -1576,8 +1574,10 @@
 			qcom,dynamic-mem-dump;
 
 			cpuss_reg {
-				qcom,dump-size = <0x30000>;
-				qcom,dump-id = <0xef>;
+				cpuss_reg {
+					qcom,dump-size = <0x30000>;
+					qcom,dump-id = <0xef>;
+				};
 			};
 
 			l1 {

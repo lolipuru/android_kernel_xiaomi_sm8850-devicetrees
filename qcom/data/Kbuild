@@ -83,6 +83,14 @@ ifeq ($(CONFIG_ARCH_BOURTZI),y)
 dtbo-y += bourtzi-ipa.dtbo
 endif
 
+ifeq ($(CONFIG_ARCH_WAIPIO),y)
+dtbo-y += waipio-ipa.dtbo
+endif
+
+ifeq ($(CONFIG_ARCH_DIWALI),y)
+dtbo-y += diwali-ipa.dtbo
+endif
+
 always-y	:= $(dtb-y) $(dtbo-y)
 subdir-y	:= $(dts-dirs)
 clean-files	:= *.dtb *.dtbo

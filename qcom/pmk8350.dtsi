@@ -25,6 +25,12 @@
 		#address-cells = <1>;
 		#size-cells = <0>;
 
+		pmic-ecid@100 {
+			compatible = "qcom,pmic-ecid";
+			reg = <0x100>;
+			qcom,pmic-name = "pmk8350";
+		};
+
 		pmk8350_pon: pon@1300 {
 			compatible = "qcom,pmk8350-pon";
 			reg = <0x1300>, <0x800>;

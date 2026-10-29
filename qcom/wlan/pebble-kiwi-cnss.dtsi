@@ -196,6 +196,7 @@
 			" {class: wlan_pdc, ss: bb, res: pdc, enable: 1}",
 			" {class: wlan_pdc, ss: bb, res: S3C0.v, dwnval: 420}",
 			" {class: wlan_pdc, ss: bb, res: S3C0.v, upval: 940}",
+			" {class: wlan_pdc, ss: bb, res: S3C0.e, enable: 0}",
 			" {class: wlan_pdc, ss: bb, res: S1J1.m, enable: 1}",
 			" {class: wlan_pdc, ss: bb, res: S1J1.v, enable: 1}";
 

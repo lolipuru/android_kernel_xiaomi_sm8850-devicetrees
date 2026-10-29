@@ -609,6 +609,30 @@
 			qcom,glinkpkt-dev-name = "glink_pkt_data_cdsp";
 		};
 
+		qcom,glinkpkt-ctrl-soccp {
+			qcom,glinkpkt-edge = "soccp";
+			qcom,glinkpkt-ch-name = "LOOPBACK_CTL_SOCCP";
+			qcom,glinkpkt-dev-name = "glink_pkt_ctrl_soccp";
+		};
+
+		qcom,glinkpkt-data-soccp {
+			qcom,glinkpkt-edge = "soccp";
+			qcom,glinkpkt-ch-name = "LOOPBACK_DATA_SOCCP";
+			qcom,glinkpkt-dev-name = "glink_pkt_data_soccp";
+		};
+
+		qcom,glinkpkt-ctrl-lmcu {
+			qcom,glinkpkt-edge = "lmcu";
+			qcom,glinkpkt-ch-name = "LOOPBACK_CTL_LMCU";
+			qcom,glinkpkt-dev-name = "glink_pkt_ctrl_lmcu";
+		};
+
+		qcom,glinkpkt-data-lmcu {
+			qcom,glinkpkt-edge = "lmcu";
+			qcom,glinkpkt-ch-name = "LOOPBACK_DATA_LMCU";
+			qcom,glinkpkt-dev-name = "glink_pkt_data_lmcu";
+		};
+
 		qcom,glinkpkt-ctrl-lpass {
 			qcom,glinkpkt-edge = "lpass";
 			qcom,glinkpkt-ch-name = "LOOPBACK_CTL_LPASS";
@@ -828,11 +852,19 @@
 		compatible = "arm,gic-v3";
 		#interrupt-cells = <3>;
 		interrupt-controller;
+		ranges;
 		#redistributor-regions = <1>;
 		redistributor-stride = <0x0 0x20000>;
 		reg = <0x17200000 0x10000>,       /* GICD */
 		     <0x17260000 0xA0000>;       /* GICR * 8 */
 		interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
+
+		gic_its: msi-controller@17240000 {
+			compatible = "arm,gic-v3-its";
+			msi-controller;
+			#msi-cells = <1>;
+			reg = <0x17240000 0x20000>;
+		};
 	};
 
 	msm_gpu: qcom,kgsl-3d0@3d00000 { };
@@ -1635,10 +1667,10 @@
 
 		slc_perfmon: qcom,slc_perfmon {
 			compatible = "qcom,slc-perfmon";
-			/* Use slc_mem_base (0xD8170000) with perfmon struct at offset 0x700 */
-			reg = <0xD8170000 0x1000>, <0x25000000 0x60000>, <0x25400000 0x60000>, <0x25800000 0x60000>;
+			/* Dedicated perfmon shared mem region, perfmon struct at offset 0x0 */
+			reg = <0xd8171000 0x1000>, <0x25000000 0x60000>, <0x25400000 0x60000>, <0x25800000 0x60000>;
 			reg-names = "perfmon_base", "trp_0_base", "trp_1_base", "trp_or_bcast_base";
-			perfmon_offset = <0x700>;
+			perfmon_offset = <0x0>;
 			clocks = <&aoss_qmp QDSS_CLK>;
 			clock-names = "qdss_clk";
 			slc-scid-status-snapshot;
@@ -2446,6 +2478,7 @@
 
 		interconnect-names = "rproc_ddr", "crypto_ddr";
 
+		firmware-name = "adsp2.mdt", "adsp2_dtb.mdt";
 		memory-region = <&adsp_mem &q6_adsp_dtb_mem>;
 
 		subdev-firmware-name = "lpaicp.mdt", "lpaicp_dtb.mdt";

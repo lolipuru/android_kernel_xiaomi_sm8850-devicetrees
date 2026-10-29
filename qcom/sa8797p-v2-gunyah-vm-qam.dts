@@ -13,3 +13,7 @@
 	qcom,msm-id = <690 0x20000>;
 	qcom,board-id = <0x01010025 0x1>;
 };
+
+&ethernet1 {
+	qcom,en-eth-switch-dbl;
+};

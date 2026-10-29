@@ -83,6 +83,7 @@
 
 &pmk8550_rtc {
 	qcom,no-alarm; /* alarm owned by ADSP */
+	status = "disabled";
 };
 
 &soc {

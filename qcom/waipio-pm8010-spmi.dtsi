@@ -225,7 +225,6 @@
 &thermal_zones {
 	pm8010i_tz {
 		polling-delay-passive = <100>;
-		polling-delay = <0>;
 		thermal-governor = "step_wise";
 		thermal-sensors = <&pm8010i_tz>;
 
@@ -252,7 +251,6 @@
 
 	pm8010j_tz {
 		polling-delay-passive = <100>;
-		polling-delay = <0>;
 		thermal-governor = "step_wise";
 		thermal-sensors = <&pm8010j_tz>;
 

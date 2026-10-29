@@ -90,6 +90,8 @@ allOf:
           contains:
             enum:
               - qcom,cpuss-sleep-stats-v6
+              - qcom,cpuss-sleep-stats-canoe
+              - qcom,cpuss-sleep-stats-glymur
     then:
       properties:
         reg:

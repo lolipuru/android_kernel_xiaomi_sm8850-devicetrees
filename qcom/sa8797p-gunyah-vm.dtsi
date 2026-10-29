@@ -1362,10 +1362,11 @@
 				};
 			};
 
-			/* Reserved device */
+			/* input device */
 			virtio-mmio@53 {
 				vdevice-type = "virtio-mmio";
 				generate = "/virtio-mmio";
+				virtio,device-type = <18>;
 				peer-default;
 				vqs-num = <0x2>;
 				push-compatible = "virtio,mmio";
@@ -1374,6 +1375,23 @@
 				dma_base = <0x0 0x30C000>;
 				memory {
 					qcom,label = <0x56>;
+					#address-cells = <0x2>;
+					allocate-base;
+				};
+			};
+
+			/* Reserved device */
+			virtio-mmio@54 {
+				vdevice-type = "virtio-mmio";
+				generate = "/virtio-mmio";
+				peer-default;
+				vqs-num = <0x2>;
+				push-compatible = "virtio,mmio";
+				sync-reset;
+				dma-coherent;
+				dma_base = <0x0 0x310000>;
+				memory {
+					qcom,label = <0x57>;
 					#address-cells = <0x2>;
 					allocate-base;
 				};
@@ -1497,6 +1515,14 @@
 				vdevice-type = "doorbell-source";
 				generate = "/hypervisor/test-dbl-gvm1-source";
 				qcom,label = <0x4>;
+				peer-default;
+			};
+
+			eth-switch-dbl {
+				vdevice-type = "doorbell";
+				generate = "/soc/eth-switch-dbl";
+				qcom,label = <0x10>;
+				push-compatible = "qcom,eth-switch-dbl";
 				peer-default;
 			};
 
@@ -2077,6 +2103,9 @@
 
 		snps,pbl = <0x10>;
 		dma-coherent;
+
+		nvmem-cells = <&eth1_mac>;
+		nvmem-cell-names = "mac-address";
 
 		rx-fifo-depth = <98304>;
 		tx-fifo-depth = <98304>;

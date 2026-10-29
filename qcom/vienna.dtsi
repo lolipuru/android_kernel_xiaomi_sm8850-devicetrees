@@ -26,7 +26,7 @@
 	memory { device_type = "memory"; reg = <0 0 0 0>; };
 
 	chosen: chosen {
-		bootargs = "android_arch_task_struct_size=512 kasan=off kpti=0 log_buf_len=512K swiotlb=0 loop.max_part=7 hibernate=nocompress irqaffinity=0-1 cpufreq.default_governor=performance fw_devlink.strict=1 printk.console_no_auto_verbose=1 rcupdate.rcu_expedited=1 rcu_nocbs=0-4 sysctl.kernel.panic_on_rcu_stall=1";
+		bootargs = "android_arch_task_struct_size=512 pcie_ports=compat kasan=off kpti=0 log_buf_len=512K swiotlb=0 loop.max_part=7 hibernate=nocompress irqaffinity=0-1 cpufreq.default_governor=performance fw_devlink.strict=1 printk.console_no_auto_verbose=1 rcupdate.rcu_expedited=1 rcu_nocbs=0-4 sysctl.kernel.panic_on_rcu_stall=1";
 	};
 
 	aliases {
@@ -304,13 +304,6 @@
 	};
 
 	reserved_memory: reserved-memory { };
-
-	mem-offline {
-		compatible = "qcom,mem-offline";
-		granule = <512>;  // Minimum granule size in MB
-		offline-sizes = <0x0 0xc0000000 0x0 0x20000000>;  // 512MB offlinable region for 4GB DDR
-		qcom,qmp = <&aoss_qmp>;  // Reference to the mailbox used for memory requests
-	};
 
 	soc: soc { };
 };
@@ -1936,6 +1929,31 @@
 				qcom,intents = <0x1000 3
 						0x3E8  7>;
 			};
+
+			qcom,glinkpkt-swm-test-0 {
+				qcom,glink-channels = "swm_test_0";
+				qcom,intents = <0x800 4>;
+			};
+
+			qcom,glinkpkt-swm-test-1 {
+				qcom,glink-channels = "swm_test_1";
+				qcom,intents = <0x800 4>;
+			};
+
+			qcom,glinkpkt-swm-test-2 {
+				qcom,glink-channels = "swm_test_2";
+				qcom,intents = <0x800 4>;
+			};
+
+			qcom,glinkpkt-swm-test-3 {
+				qcom,glink-channels = "swm_test_3";
+				qcom,intents = <0x800 4>;
+			};
+
+			qcom,glinkpkt-swm-test-4 {
+				qcom,glink-channels = "swm_test_4";
+				qcom,intents = <0x800 4>;
+			};
 		};
 
 		glink_am: am {
@@ -1960,6 +1978,31 @@
 				qcom,glinkpkt-ch-name = "contexthub_hal_app_mgr_chnl";
 				qcom,intents = <0x1000 10>;
 			};
+
+			qcom,glinkpkt-awm-test-0 {
+				qcom,glink-channels = "awm_test_0";
+				qcom,intents = <0x800 4>;
+			};
+
+			qcom,glinkpkt-awm-test-1 {
+				qcom,glink-channels = "awm_test_1";
+				qcom,intents = <0x800 4>;
+			};
+
+			qcom,glinkpkt-awm-test-2 {
+				qcom,glink-channels = "awm_test_2";
+				qcom,intents = <0x800 4>;
+			};
+
+			qcom,glinkpkt-awm-test-3 {
+				qcom,glink-channels = "awm_test_3";
+				qcom,intents = <0x800 4>;
+			};
+
+			qcom,glinkpkt-awm-test-4 {
+				qcom,glink-channels = "awm_test_4";
+				qcom,intents = <0x800 4>;
+			};
 		};
 	};
 
@@ -1972,6 +2015,76 @@
 
 	qcom_glinkpkt: qcom,glinkpkt {
 		compatible = "qcom,glinkpkt";
+
+		qcom,glinkpkt-awm-test-0 {
+				qcom,glinkpkt-edge = "am";
+				qcom,glinkpkt-ch-name = "awm_test_0";
+				qcom,glinkpkt-dev-name = "glinkpkt_awm_test_0";
+				qcom,glinkpkt-enable-ch-close;
+		};
+
+		qcom,glinkpkt-awm-test-1 {
+				qcom,glinkpkt-edge = "am";
+				qcom,glinkpkt-ch-name = "awm_test_1";
+				qcom,glinkpkt-dev-name = "glinkpkt_awm_test_1";
+				qcom,glinkpkt-enable-ch-close;
+		};
+
+		qcom,glinkpkt-awm-test-2 {
+				qcom,glinkpkt-edge = "am";
+				qcom,glinkpkt-ch-name = "awm_test_2";
+				qcom,glinkpkt-dev-name = "glinkpkt_awm_test_2";
+				qcom,glinkpkt-enable-ch-close;
+		};
+
+		qcom,glinkpkt-awm-test-3 {
+				qcom,glinkpkt-edge = "am";
+				qcom,glinkpkt-ch-name = "awm_test_3";
+				qcom,glinkpkt-dev-name = "glinkpkt_awm_test_3";
+				qcom,glinkpkt-enable-ch-close;
+		};
+
+		qcom,glinkpkt-awm-test-4 {
+				qcom,glinkpkt-edge = "am";
+				qcom,glinkpkt-ch-name = "awm_test_4";
+				qcom,glinkpkt-dev-name = "glinkpkt_awm_test_4";
+				qcom,glinkpkt-enable-ch-close;
+		};
+
+		qcom,glinkpkt-swm-test-0 {
+				qcom,glinkpkt-edge = "wm";
+				qcom,glinkpkt-ch-name = "swm_test_0";
+				qcom,glinkpkt-dev-name = "glinkpkt_swm_test_0";
+				qcom,glinkpkt-enable-ch-close;
+		};
+
+		qcom,glinkpkt-swm-test-1 {
+				qcom,glinkpkt-edge = "wm";
+				qcom,glinkpkt-ch-name = "swm_test_1";
+				qcom,glinkpkt-dev-name = "glinkpkt_swm_test_1";
+				qcom,glinkpkt-enable-ch-close;
+		};
+
+		qcom,glinkpkt-swm-test-2 {
+				qcom,glinkpkt-edge = "wm";
+				qcom,glinkpkt-ch-name = "swm_test_2";
+				qcom,glinkpkt-dev-name = "glinkpkt_swm_test_2";
+				qcom,glinkpkt-enable-ch-close;
+		};
+
+		qcom,glinkpkt-swm-test-3 {
+				qcom,glinkpkt-edge = "wm";
+				qcom,glinkpkt-ch-name = "swm_test_3";
+				qcom,glinkpkt-dev-name = "glinkpkt_swm_test_3";
+				qcom,glinkpkt-enable-ch-close;
+		};
+
+		qcom,glinkpkt-swm-test-4 {
+				qcom,glinkpkt-edge = "wm";
+				qcom,glinkpkt-ch-name = "swm_test_4";
+				qcom,glinkpkt-dev-name = "glinkpkt_swm_test_4";
+				qcom,glinkpkt-enable-ch-close;
+		};
 
 		qcom,glinkpkt-ctrl-cdsp {
 				qcom,glinkpkt-edge = "cdsp";
@@ -2130,6 +2243,7 @@
 			qcom,glinkpkt-ch-name = "hci_arbiter_chnl";
 			qcom,glinkpkt-dev-name = "glink_pkt_hci_arbiter_chnl";
 			qcom,glinkpkt-enable-ch-close;
+			qcom,glinkpkt-enable-wakelock;
 		};
 
 		qcom,glinkpkt-socket-offload {
@@ -2137,6 +2251,7 @@
 			qcom,glinkpkt-ch-name = "bt_socket_hal_chnl";
 			qcom,glinkpkt-dev-name = "glink_pkt_bt_socket_hal_chnl";
 			qcom,glinkpkt-enable-ch-close;
+			qcom,glinkpkt-enable-wakelock;
 		};
 
 		qcom,glinkpkt-gatt-offload {
@@ -2144,6 +2259,7 @@
 			qcom,glinkpkt-ch-name = "gatt_offload_chnl";
 			qcom,glinkpkt-dev-name = "glink_pkt_bt_gatt_offload_chnl";
 			qcom,glinkpkt-enable-ch-close;
+			qcom,glinkpkt-enable-wakelock;
 		};
 
 		qcom,glinkpkt-wm-qsh-0 {
@@ -2676,6 +2792,7 @@
 #include "vienna-coresight.dtsi"
 #include "vienna-debug.dtsi"
 #include "vienna-pinctrl.dtsi"
+#include "vienna-pcie.dtsi"
 #include "vienna-pmic-overlay.dtsi"
 #include "vienna-reserved-memory.dtsi"
 #include "vienna-regulators.dtsi"

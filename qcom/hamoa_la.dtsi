@@ -5,11 +5,6 @@
 
 #include "x1e80100.dtsi"
 
-&gcc {
-	protected-clocks = <GCC_QSPI_CNOC_PERIPH_AHB_CLK>, <GCC_QSPI_CORE_CLK>,
-			<GCC_QSPI_CORE_CLK_SRC>;
-};
-
 &pcie_smmu {
 	status = "disabled";
 };
@@ -60,6 +55,17 @@
 		no-map;
 		reg = <0x0 0xa6c00000 0x0 0x400000>;
 	};
+
+	ta_mem: ta@d8632000 {
+		reg = <0x0 0xd8632000 0x0 0x05600000>;
+		no-map;
+	};
+
+	ramoops_mem: ramoops-region {
+		alloc-ranges = <0x1 0x00000000 0xfffffffe 0xffffffff>;
+		size = <0x0 0x200000>;
+		no-map;
+	};
 };
 
 &usb_audio_qmi_dev {
@@ -68,4 +74,13 @@
 
 &pcie5 {
 	status = "disabled";
+};
+
+&soc {
+	qcom_ramoops {
+		compatible = "qcom,ramoops";
+		memory-region = <&ramoops_mem>;
+		pmsg-size = <0x200000>;
+		mem-type = <2>;
+	};
 };

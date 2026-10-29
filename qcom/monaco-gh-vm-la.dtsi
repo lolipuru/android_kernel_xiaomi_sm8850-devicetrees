@@ -1549,20 +1549,14 @@
 		};
 	};
 
-	emac_iommu_region: emac-iommu-region {
-		iommu-addresses = <&emac0_hw 0x0 0x80000000>, <&emac0_hw 0xC0000000 0x40000000>;
-	};
-
-	emac0_hw: qcom,ethernet@2304C000 {
-		compatible = "qcom,stmmac-ethqos-emac-gy";
+	emac1_hw: qcom,ethernet@2304C000 {
+		compatible = "qcom,stmmac-ethqos-emac1";
 		emac-core-version = <0x30010000>;
+		qcom,arm-smmu;
 		reg = <0x2304C000 0x1000>;
 		reg-names = "stmmaceth";
-		dma-coherent;
-		interrupts-extended = <&intc 0 870 1>, <&intc 0 941 1>;
+		interrupts-extended = <&intc 0 870 4>, <&intc 0 941 4>;
 		interrupt-names = "rx_ch0_intr", "tx_ch0_intr";
-		power-domains = <&scmi_power 6>;
-		power-domain-names = "gvm_power_mdio";
 		snps,tso;
 		snps,pbl = <32>;
 		mac-address = [00 55 7B B5 7D f7];
@@ -1571,11 +1565,12 @@
 		snps,mtl-rx-config = <&mtl_rx_setup>;
 		snps,mtl-tx-config = <&mtl_tx_setup>;
 		queue = <0>;
-		iommus = <&apps_smmu 0x128 0x1>;
-		qcom,iommu-geometry = <0x80000000 0x40000000>;
-		memory-region = <&emac_iommu_region>;
-		qcom,iommu-dma = "fastmap";
-
+		emac1_emb_smmu: emac1_emb_smmu {
+			compatible = "qcom,emac-thin-smmu-embedded";
+			iommus = <&apps_smmu 0x128 0x1>;
+			qcom,iommu-dma = "fastmap";
+			qcom,iommu-dma-addr-pool = <0x80000000 0x40000000>;
+		};
 	};
 
 	logbuf: qcom,logbuf-vendor-hooks {

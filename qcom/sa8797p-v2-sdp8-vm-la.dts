@@ -40,7 +40,7 @@
 };
 
 &chosen {
-	bootconfig = "androidboot.dtbo_idx=31 androidboot.fstab_suffix=hqx.nord.qcom";
+	bootconfig = "androidboot.dtbo_idx=32 androidboot.fstab_suffix=hqx.nord.qcom";
 };
 
 &soc {

@@ -307,6 +307,10 @@
 				reg = <0x97 0x1>;
 			};
 
+			logo_orientation: logo-orientation@63 {
+				reg = <0x63 0x1>;
+			};
+
 		};
 
 		pm5100_sdam_5: sdam@7400 {

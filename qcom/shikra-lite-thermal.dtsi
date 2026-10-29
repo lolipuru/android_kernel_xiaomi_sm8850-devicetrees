@@ -92,7 +92,7 @@
 		};
 	};
 
-	gpuss-thermal {
+	gpu-thermal {
 		trips {
 			thermal-engine-config {
 				temperature = <125000>;
@@ -124,7 +124,7 @@
 		};
 	};
 
-	mdmss-0-thermal {
+	mdm-0-thermal {
 		trips {
 			thermal-engine-config {
 				temperature = <125000>;
@@ -136,7 +136,7 @@
 		};
 	};
 
-	mdmss-1-thermal {
+	mdm-1-thermal {
 		trips {
 			thermal-engine-config {
 				temperature = <125000>;

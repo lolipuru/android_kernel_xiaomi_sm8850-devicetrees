@@ -317,14 +317,6 @@
 
 	reserved_memory: reserved-memory { };
 
-	mem-offline {
-		compatible = "qcom,mem-offline";
-		status="disabled";
-		offline-sizes = <0x2 0xc0000000 0x1 0x0>;
-		granule = <512>;
-		qcom,qmp = <&aoss_qmp>;
-	};
-
 	soc: soc { };
 };
 
@@ -1478,7 +1470,7 @@
 	};
 
 	cpuss-sleep-stats@18870000 {
-		compatible = "qcom,cpuss-sleep-stats-v6";
+		compatible = "qcom,cpuss-sleep-stats-v6", "qcom,cpuss-sleep-stats-canoe";
 		reg = <0x0 0x18870000 0x0 0x4000>;
 		reg-names = "base";
 		num-clusters = <2>;

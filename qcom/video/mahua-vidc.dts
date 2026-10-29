@@ -16,6 +16,6 @@
 / {
 	model = "Qualcomm Technologies, Inc. mahua";
 	compatible = "qcom,mahua";
-	qcom,msm-id = <693 0x10000>;
+	qcom,msm-id = <693 0x10000>,<693 0x20000>;
 	qcom,board-id = <0 0>;
 };

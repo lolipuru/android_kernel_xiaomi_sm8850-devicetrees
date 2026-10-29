@@ -11,6 +11,6 @@
 / {
 	model = "Qualcomm Technologies, Inc. Mahua SoC";
 	compatible = "qcom,mahua";
-	qcom,msm-id = <693 0x10000>;
+	qcom,msm-id = <693 0x10000>, <693 0x20000>;
 	qcom,board-id = <0 0>;
 };

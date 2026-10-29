@@ -27,14 +27,6 @@
 
 	ddr-regions { };
 
-	mem-offline {
-		compatible = "qcom,mem-offline";
-		offline-sizes = <0x1 0x40000000 0x0 0x40000000>,
-				<0x1 0xc0000000 0x0 0x80000000>,
-				<0x2 0xc0000000 0x1 0x40000000>;
-		granule = <512>;
-	};
-
 	aliases: aliases {
 		mmc0 = &sdhc_1; /* SDC1 eMMC slot */
 		mmc1 = &sdhc_2; /* SDC2 SD Card slot */
@@ -1158,7 +1150,6 @@
 		/* Outputs to lpass */
 		qcom,smem-states = <&adsp_smp2p_out 0>;
 		qcom,smem-state-names = "stop";
-		status = "disabled";
 
 		remoteproc_adsp_glink: glink-edge {
 			qcom,remote-pid = <2>;
@@ -1226,7 +1217,6 @@
 		/* Outputs to turing */
 		qcom,smem-states = <&cdsp_smp2p_out 0>;
 		qcom,smem-state-names = "stop";
-		status = "disabled";
 
 		remoteproc_cdsp_glink: glink-edge {
 			qcom,remote-pid = <5>;
@@ -2087,7 +2077,6 @@
 		/* Outputs to mss */
 		qcom,smem-states = <&modem_smp2p_out 0>;
 		qcom,smem-state-names = "stop";
-		status = "disabled";
 
 		glink-edge {
 			qcom,remote-pid = <1>;
@@ -2253,6 +2242,7 @@
 
 		device-name = "tpdm_west";
 		qcom,dsb-element-bits = <32>;
+		qcom,dsb-msrs-num = <16>;
 
 		clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
 		clock-names = "apb_pclk";
@@ -2271,6 +2261,7 @@
 		reg-names = "tpdm-base";
 
 		device-name = "tpdm_spdm";
+		qcom,cmb-element-bits = <32>;
 
 		clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
 		clock-names = "apb_pclk";
@@ -2290,7 +2281,6 @@
 		reg-names = "funnel-base";
 
 		device-name = "funnel_turing";
-		qcom,dsb-element-bits = <1 32>;
 
 		clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
 		clock-names = "apb_pclk";

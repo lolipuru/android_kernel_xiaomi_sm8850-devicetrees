@@ -79,6 +79,7 @@
 		arm,primecell-periphid = <0x000f0e00>;
 		reg = <0x8b58000 0x1000>;
 		reg-names = "tpdm-base";
+		qcom,dsb-element-bits = <32>;
 
 		device-name = "tpdm_center";
 
@@ -346,6 +347,7 @@
 		arm,primecell-periphid = <0x000f0e00>;
 		reg = <0x8a58000 0x1000>;
 		reg-names = "tpdm-base";
+		qcom,dsb-element-bits = <32>;
 
 		device-name = "tpdm_west";
 
@@ -390,6 +392,8 @@
 		arm,primecell-periphid = <0x000f0e00>;
 		reg = <0x8a01000 0x1000>;
 		reg-names = "tpdm-base";
+		qcom,dsb-element-bits = <32>;
+		qcom,cmb-element-bits = <32>;
 
 		device-name = "tpdm_mapss";
 

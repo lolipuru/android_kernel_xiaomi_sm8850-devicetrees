@@ -31,8 +31,9 @@
 
 &sdhc_2 {
 	status = "ok";
-	vdd-supply = <&L24B>;
 	qcom,vdd-current-level = <0 800000>;
+
+	vmmc-supply =  <&sdcard_vdd_3p0>;
 
 	vdd-io-supply = <&L28B>;
 	qcom,vdd-io-voltage-level = <1800000 2960000>;

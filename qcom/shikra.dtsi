@@ -36,7 +36,6 @@
 		mmc0 = &sdhc_1;
 		mmc1 = &sdhc_2; /* SDC2 SD card slot */
 		i2c3 = &i2c3;
-		spi5 = &spi5;
 		hsuart0 = &uart8;
 	};
 
@@ -1669,6 +1668,35 @@
 			status = "disabled";
 		};
 
+		spi9: spi@4aa4000 {
+			compatible = "qcom,spi-geni";
+			reg = <0x4aa4000 0x4000>;
+			reg-names = "se_phys";
+			interrupts = <GIC_SPI 536 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&gcc GCC_QUPV3_WRAP0_S9_CLK>;
+			clock-names = "se-clk";
+			interconnects =
+			<&clk_virt MASTER_QUP_CORE_0 &clk_virt SLAVE_QUP_CORE_0>,
+			<&mem_noc MASTER_AMPSS_M0 &config_noc SLAVE_QUP_0>,
+			<&system_noc MASTER_QUP_0 &mc_virt SLAVE_EBI_CH0>;
+			interconnect-names = "qup-core",
+					     "qup-config",
+					     "qup-memory";
+			pinctrl-0 = <&qup_spi9_miso>, <&qup_spi9_mosi>,
+				    <&qup_spi9_clk>, <&qup_spi9_cs>;
+			pinctrl-1 = <&qup_spi9_sleep>;
+			pinctrl-names = "default",
+					"sleep";
+			dmas = <&gpi_dma0 0 9 QCOM_GPI_SPI 64 0>,
+			       <&gpi_dma0 1 9 QCOM_GPI_SPI 64 0>;
+			dma-names = "tx",
+				    "rx";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			spi-max-frequency = <50000000>;
+			status = "disabled";
+		};
+
 		i2c9: i2c-a@4aa4000 {
 			compatible = "qcom,i2c-geni";
 			reg = <0x4aa4000 0x4000>;
@@ -1724,7 +1752,7 @@
 		      <0x1e00000 0x2000000>,
 		      <0x3e00000 0x100000>,
 		      <0x3f00000 0xa0000>,
-		      <0x1c0a700 0x26000>;
+		      <0x1c0a000 0x26000>;
 		reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
 		interrupts-extended = <&mpm 86 IRQ_TYPE_LEVEL_HIGH>;
 		interrupt-names = "periph_irq";
@@ -2439,12 +2467,6 @@
 					iommus = <&apps_smmu 0x0206 0x0000>;
 				};
 
-				compute-cb@9 {
-					compatible = "qcom,fastrpc-compute-cb";
-					reg = <9>;
-					iommus = <&apps_smmu 0x0209 0x0000>;
-				};
-
 			};
 		};
 	};
@@ -2806,15 +2828,11 @@
 };
 
 #include "shikra-pinctrl.dtsi"
-#include "shikra-pcie.dtsi"
 #include "shikra-reserved-memory.dtsi"
-#include "shikra-pm4125-regulator.dtsi"
-#include "shikra-pm8005-regulator.dtsi"
 #include "msm-arm-smmu-shikra.dtsi"
 #include "shikra-dma-heaps.dtsi"
 #include "shikra-thermal.dtsi"
 #include "msm-rdbg-shikra.dtsi"
-#include "shikra-usb.dtsi"
 #include "shikra-walt.dtsi"
 #include "shikra-debug.dtsi"
 #include "shikra-coresight.dtsi"
@@ -3150,6 +3168,31 @@
 		function = "gpio";
 	};
 
+	qup_spi9_clk: qup_spi9_clk-state {
+		pins = "gpio50";
+		function = "qup0_se9_l2";
+	};
+
+	qup_spi9_cs: qup_spi9_cs-state {
+		pins = "gpio51";
+		function = "qup0_se9_l3";
+	};
+
+	qup_spi9_miso: qup_spi9_miso-state {
+		pins = "gpio48";
+		function = "qup0_se9_l0";
+	};
+
+	qup_spi9_mosi: qup_spi9_mosi-state {
+		pins = "gpio49";
+		function = "qup0_se9_l1";
+	};
+
+	qup_spi9_sleep: qup_spi9_sleep-state {
+		pins = "gpio48", "gpio49", "gpio50", "gpio51";
+		function = "gpio";
+	};
+
 	qup_uart0_rx: qup-uart0-rx-state {
 		pins = "gpio1";
 		function = "qup0_se0_l3";
@@ -3432,5 +3475,15 @@
 			0C 0A 08 06 04 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 02 04 06 08 0A 0C 0F
 			10 12 13 14 16 2A 29 28 26 24 22 21 20 1F 1E 1D 1C 18 00 00 00 00 00 00 00 00 00 00 00 00
 			00 00 00 00 82 01];
+
+		goodix,qts_en;
+		goodix,touch-type = "primary";
+		qts,trusted-touch-mode = "vm_mode";
+		qts,touch-environment = "pvm";
+		qts,trusted-touch-type = "primary";
+		qts,trusted-touch-spi-irq = <267>;
+		qts,trusted-touch-io-bases = <0x4a90000>;
+		qts,trusted-touch-io-sizes = <0x1000>;
+		qts,trusted-touch-vm-gpio-list = <&tlmm 12 0 &tlmm 13 0 &tlmm 76 0 &tlmm 85 0x2008>;
 	};
 };

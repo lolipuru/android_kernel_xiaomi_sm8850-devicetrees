@@ -10,9 +10,9 @@
 
 / {
 	model = "Qualcomm Technologies, Inc. Shikra OEMVM ITP";
-	compatible = "qcom,shikra-atp", "qcom,shikra", "qcom,shikrap-atp",
-			"qcom,shikrap", "qcom,atp";
-	qcom,board-id = <0 0>;
+	compatible = "qcom,shikra-itp", "qcom,shikra", "qcom,shikrap-itp",
+			"qcom,shikrap", "qcom,itp";
+	qcom,board-id = <0x10033 0x0>, <0x20033 0x0>, <0x30033 0x0>, <0x40033 0x0>, <0x50033 0x0>, <0x60033 0x0>;
 
 	host {
 	};

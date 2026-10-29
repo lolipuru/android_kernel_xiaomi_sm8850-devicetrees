@@ -33,7 +33,3 @@
 &gcc_pcie_0_gdsc {
 	status = "ok";
 };
-
-&bluetooth {
-	compatible = "qcom,qca6490";
-};

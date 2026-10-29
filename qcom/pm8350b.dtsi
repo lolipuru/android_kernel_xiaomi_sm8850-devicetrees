@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: BSD-3-Clause
 /*
- * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
  */
 
 #include <dt-bindings/interrupt-controller/irq.h>
@@ -228,7 +228,6 @@
 &thermal_zones {
 	pm8350b_temp_alarm: pm8350b_tz {
 		polling-delay-passive = <100>;
-		polling-delay = <0>;
 		thermal-governor = "step_wise";
 		thermal-sensors = <&pm8350b_tz>;
 
@@ -254,8 +253,6 @@
 	};
 
 	pm8350b-ibat-lvl0 {
-		polling-delay-passive = <0>;
-		polling-delay = <0>;
 		thermal-governor = "step_wise";
 		thermal-sensors = <&pm8350b_bcl 0>;
 
@@ -269,8 +266,6 @@
 	};
 
 	pm8350b-ibat-lvl1 {
-		polling-delay-passive = <0>;
-		polling-delay = <0>;
 		thermal-governor = "step_wise";
 		thermal-sensors = <&pm8350b_bcl 1>;
 
@@ -285,14 +280,13 @@
 
 	pm8350b-bcl-lvl0 {
 		polling-delay-passive = <500>;
-		polling-delay = <0>;
 		thermal-governor = "step_wise";
 		thermal-sensors = <&pm8350b_bcl 5>;
 
 		trips {
 			b_bcl_lvl0: b-bcl-lvl0 {
 				temperature = <1>;
-				hysteresis = <1>;
+				hysteresis = <0>;
 				type = "passive";
 			};
 		};
@@ -300,14 +294,13 @@
 
 	pm8350b-bcl-lvl1 {
 		polling-delay-passive = <500>;
-		polling-delay = <0>;
 		thermal-governor = "step_wise";
 		thermal-sensors = <&pm8350b_bcl 6>;
 
 		trips {
 			b_bcl_lvl1: b-bcl-lvl1 {
 				temperature = <1>;
-				hysteresis = <1>;
+				hysteresis = <0>;
 				type = "passive";
 			};
 		};
@@ -315,14 +308,13 @@
 
 	pm8350b-bcl-lvl2 {
 		polling-delay-passive = <500>;
-		polling-delay = <0>;
 		thermal-governor = "step_wise";
 		thermal-sensors = <&pm8350b_bcl 7>;
 
 		trips {
 			b_bcl_lvl2: b-bcl-lvl2 {
 				temperature = <1>;
-				hysteresis = <1>;
+				hysteresis = <0>;
 				type = "passive";
 			};
 		};
@@ -330,7 +322,6 @@
 
 	socd {
 		polling-delay-passive = <100>;
-		polling-delay = <0>;
 		thermal-governor = "step_wise";
 		thermal-sensors = <&bcl_soc>;
 

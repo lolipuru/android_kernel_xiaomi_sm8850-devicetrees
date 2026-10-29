@@ -78,6 +78,17 @@ dtbo-y += bourtzi-qrd-adrastea.dtbo
 dtbo-y += bourtzi-rcm-adrastea.dtbo
 endif
 
+ifeq ($(CONFIG_ARCH_COAST),y)
+dtbo-y += coast-atp-wcn7750.dtbo
+dtbo-y += coast-cdp-wcn7750.dtbo
+dtbo-y += coast-mtp-qca6750.dtbo
+dtbo-y += coast-mtp-wcn7750.dtbo
+dtbo-y += coast-qrd-qca6750.dtbo
+dtbo-y += coast-qrd-wcn7750.dtbo
+dtbo-y += coast-rcm-qca6750.dtbo
+dtbo-y += coast-rcm-wcn7750.dtbo
+endif
+
 ifeq ($(CONFIG_ARCH_SUN),y)
 dtbo-y += sun-kiwi-cnss.dtbo
 dtbo-y += sun-kiwi-cnss-v8.dtbo
@@ -109,11 +120,17 @@ dtbo-y += mahua-wcn7760-cnss.dtbo
 dtbo-y += mahua-kiwi-cnss.dtbo
 endif
 
+ifeq ($(CONFIG_ARCH_WAIPIO),y)
+dtbo-y += waipio-kiwi-cnss.dtbo
+dtbo-y += waipio-qca6490-cnss.dtbo
+endif
+
 ifeq ($(CONFIG_ARCH_RAVELIN),y)
 dtbo-y += ravelin-idp-adrastea.dtbo
 dtbo-y += ravelin-qrd-adrastea.dtbo
 dtbo-y += ravelin-atp-adrastea.dtbo
 dtbo-y += ravelin-qca6490-cnss.dtbo
+dtbo-y += ravelin-qca6490-cnss-fp.dtbo
 dtbo-y += ravelin-qca6750-icnss.dtbo
 endif
 
@@ -130,11 +147,14 @@ endif
 
 ifeq ($(CONFIG_ARCH_PEBBLE),y)
 dtbo-y += pebble-atp-fig.dtbo
-dtbo-y += pebble-cdp-fig.dtbo
 dtbo-y += pebble-mtp-fig.dtbo
+ifneq ($(TARGET_BOARD_PLATFORM),pebble-le)
+dtbo-y += pebble-cdp-fig.dtbo
 dtbo-y += pebble-qrd-fig.dtbo
 dtbo-y += pebble-rcm-fig.dtbo
+endif
 dtbo-y += pebble-cdp-wcn7750.dtbo
+dtbo-y += pebble-hdk-wcn7750.dtbo
 dtbo-y += pebble-mtp-wcn7750.dtbo
 dtbo-y += pebble-qrd-wcn7750.dtbo
 dtbo-y += pebble-rcm-wcn7750.dtbo

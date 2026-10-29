@@ -173,7 +173,7 @@
 &pcie1 {
 	qcom,no-l1ss-supported;
 	dummy-supply = <&pcie_i2c_ctrl>;
-	pcie-i2c-phandle = <&qupv3_se0_i2c>;
+	pcie-i2c-phandle = <&pcie_i2c_ctrl>;
 	vreg-3p3-supply = <&qps615_rsex_vreg>;
 	iommu-map = <0x0 &apps_smmu 0x1c80 0x1>,
 		    <0x100 &apps_smmu 0x1c81 0x1>,

@@ -9,6 +9,7 @@
 #include "yupik-pmic-overlay.dtsi"
 #include "pm7250b.dtsi"
 #include "yupik-pm7250b-thermal-overlay.dtsi"
+#include "yupikp-iot-cpe.dtsi"
 
 / {
 	qcom,pmic-id = <0x0 0x0 0x0 0x0 0x0 0x0 0x0 0x0 0x2e>;
@@ -25,7 +26,7 @@
 
 		vol_up {
 			label = "volume_up";
-			gpios = <&pm7325_gpios 6 GPIO_ACTIVE_LOW>;
+			gpios = <&tlmm 35 GPIO_ACTIVE_LOW>;
 			linux,input-type = <1>;
 			linux,code = <KEY_VOLUMEUP>;
 			gpio-key,wakeup;
@@ -33,6 +34,33 @@
 			linux,can-disable;
 		};
 	};
+
+	rtl8111h_3v3_vreg: rtl8111h_3v3_vreg {
+		compatible = "regulator-fixed";
+		regulator-name = "rtl8111h_3v3_vreg";
+		gpio = <&tlmm 6 GPIO_ACTIVE_HIGH>;
+		vin-supply = <&upd_rest_vreg>;
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		enable-active-high;
+		regulator-enable-ramp-delay = <10000>;
+		regulator-always-on;
+		regulator-boot-on;
+	};
+
+
+	rtl8111h_isolate_vreg: rtl8111h_isolate_vreg {
+		compatible = "regulator-fixed";
+		regulator-name = "rtl8111h_isolate_vreg";
+		gpio = <&tlmm 40 GPIO_ACTIVE_HIGH>;
+		vin-supply = <&rtl8111h_3v3_vreg>;
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1800000>;
+		enable-active-high;
+		regulator-always-on;
+		regulator-boot-on;
+	};
+
 };
 
 &spmi_debug_bus {
@@ -397,23 +425,59 @@
 	};
 };
 
+&aqr_vreg {
+	status = "disabled";
+};
+
+&qep_vreg {
+	status = "disabled";
+};
+
+&gcc_pcie_1_gdsc {
+	status = "ok";
+};
+
+&pcie1 {
+	status = "ok";
+	qcom,boot-option = <0x0>;
+};
+
+&pcie1_msi {
+	status = "ok";
+};
+
 
 /*==============================*/
 /*     Display Related End      */
 /*==============================*/
 
 /*==============================*/
-/*     Audio Related Start      */
+/*     Key Related Start        */
 /*==============================*/
 
-/*==============================*/
-/*     Audio Related End        */
-/*==============================*/
+&pm7325_gpios {
+	/delete-node/ key_vol_up;
+};
+
+&tlmm {
+	key_vol_up {
+		key_vol_up_default: key_vol_up_default {
+			mux {
+				pins = "gpio35";
+				function = "normal";
+			};
+
+			config {
+				pins = "gpio35";
+				input-enable;
+				bias-pull-up;
+				power-source = <1>;
+				drive-strength = <2>;
+			};
+		};
+	};
+};
 
 /*==============================*/
-/*     Camera Related Start        */
-/*==============================*/
-
-/*==============================*/
-/*     Camera Related End        */
+/*     Key Related End          */
 /*==============================*/

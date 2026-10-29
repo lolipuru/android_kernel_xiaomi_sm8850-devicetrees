@@ -312,12 +312,16 @@
 		iomemory-ranges = <
 			/* 2nd UFS iomemory region */
 			0x0 0x1DA4000 0x0 0x1DA4000 0x0 0x3000 0x0
+			/* MPROC NS2 IPCC region */
+			0x0 0x422000 0x0 0x422000 0x0 0x1000 0x0
 		>;
 
 		/* Pass through IRQs */
 		gic-irq-ranges = <
 			/* 2nd UFS IRQ  */
 			157 157
+			/* MPROC NS2 IPCC GIC IRQ */
+			592 592
 		>;
 
 		memory {
@@ -1142,6 +1146,15 @@
 			qcom,dma-heap-type = <HEAP_TYPE_CMA>;
 			memory-region = <&qseecom_ta_mem>;
 		};
+	};
+
+	ipcc_mproc_apps_ns2: qcom,ipcc@422000 {
+		compatible = "qcom,ipcc";
+		reg = <0x422000 0x1000>;
+		interrupts = <GIC_SPI 560 IRQ_TYPE_LEVEL_HIGH>;
+		interrupt-controller;
+		#interrupt-cells = <3>;
+		#mbox-cells = <2>;
 	};
 
 	qcom,mem-buf {

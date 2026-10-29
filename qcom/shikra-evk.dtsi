@@ -582,7 +582,7 @@
 &pcie0 {
 	status = "ok";
 
-	pcie-i2c-phandle = <&i2c3>;
+	pcie-i2c-phandle = <&pcie0_i2c_ctrl>;
 	qcom,no-client-based-bw-voting;
 
 	iommu-map = <0x0 &apps_smmu 0x0800 0x1>,

@@ -170,7 +170,7 @@
 };
 
 &pm8350c_pwm {
-	status = "disabled";
+	status = "ok";
 };
 
 &pm8350c_switch0 {
@@ -203,36 +203,56 @@
 /*==============================*/
 /*     USB Related Start        */
 /*==============================*/
-&usb0 {
-	port {
-		usb_port0: endpoint {
-			remote-endpoint = <&usb_port0_connector>;
-		};
+&soc {
+	extcon_ktm5000: extcon_ktm5000 {
+		compatible = "kinetic,ktm5000b0t";
+		status = "ok";
+		kinetic,irq-gpio = <&tlmm 159 GPIO_ACTIVE_HIGH>;
+		kinetic,power-3v3-en = <&tlmm 128 0x00>;
+		kinetic,reset-gpio = <&tlmm 63 0x00>;
+		usb-controller = <&usb0>;
 	};
 };
 
-&ucsi {
-	connector {
-		compatible = "usb-c-connector";
+&usb0 {
+	/delete-property/ qcom,usb-charger;
+	/delete-property/ usb-role-switch;
+	qcom,charging-disabled;
+	qcom,usb-dp-concurrent-mode-enable;
 
-		ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
+	extcon = <&extcon_ktm5000>;
 
-			port@0 {
-				reg = <0>;
-
-				usb_port0_connector: endpoint {
-					remote-endpoint = <&usb_port0>;
-				};
-			};
-		};
+	qcom,core-clk-rate = <200000000>;
+	qcom,interconnect-values-nom = /* NOMINAL Votes */
+		<1000000 2500000>,
+		<0 2400>,
+		<0 40000>;
+	qcom,interconnect-values-svs = /* SVS Votes */
+		<240000 700000>,
+		<0 2400>,
+		<0 40000>;
+	dwc3@a600000 {
+		qcom,use-rt-thread;
+		snps,is-utmi-l1-suspend;
+		snps,dis-u1-entry-quirk;
+		snps,dis-u2-entry-quirk;
+		snps,dis_u2_susphy_quirk;
 	};
 };
 
 
 &fsa4480 {
 	status = "disabled";
+};
+
+&usb1 {
+	/delete-property/ usb-role-switch;
+	/delete-property/ qcom,default-mode-none;
+	qcom,default-mode-host;
+	dwc3@8c00000 {
+		/delete-property/ usb-role-switch;
+		dr_mode = "host";
+	};
 };
 
 /*==============================*/
@@ -515,6 +535,18 @@
 /*==============================*/
 /*     PD FL7112 Related Start  */
 /*==============================*/
+&qupv3_se1_i2c {
+	status = "ok";
+	qcom,clk-freq-out = <100000>;
+	fl7112:fl7112@3a {
+		status = "ok";
+		compatible = "qcom,fl7112-fs8822";
+		reg = <0x3a>;
+		fl7112,reset-gpio = <&tlmm 40 0>;
+		fl7112,pwr-1v2 = <&tlmm 41 0>;
+		fl7112,pwr-3v3 = <&tlmm 42 0>;
+	};
+};
 /*==============================*/
 /*     PD FL7112 Related End    */
 /*==============================*/

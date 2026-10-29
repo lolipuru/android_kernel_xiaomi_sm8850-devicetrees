@@ -328,6 +328,7 @@ pm4125_1: pm4125@1 {
 		reg = <0x5600>;
 		qcom,vib-ldo-volt-uv = <3000000>;
 		qcom,disable-overdrive;
+		status = "disabled";
 	};
 
 	pm4125-pwm {

@@ -862,6 +862,7 @@
 			qcom,peripheral-size = <0x800000>;
 			qcom,client-id = <9>;
 			memory-region = <&dsm_cma_mem>;
+			qcom,ssr-ramdump;
 			label = "modem";
 			qcom,dynamic-size-feature;
 			qcom,dynamic-size-max = <0x800000>;

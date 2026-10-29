@@ -28,10 +28,14 @@
 					"vendor_boot_a", "init_boot_b", "init_boot_a";
 		};
 	};
+	aliases: aliases {
+		hsuart0 = "/soc/qcom,qupv3_2_geni_se@8c0000/qcom,qup_uart@88c000";
+		hsuart1 = "/soc/qcom,qupv3_2_geni_se@8c0000/qcom,qup_uart@880000";
+	};
 };
 
 &chosen {
-	bootconfig = "androidboot.dtbo_idx=27 androidboot.fstab_suffix=hqx.nord.qcom";
+	bootconfig = "androidboot.dtbo_idx=28 androidboot.fstab_suffix=hqx.nord.qcom";
 };
 
 &reserved_memory {
@@ -154,15 +158,19 @@
 };
 
 &qupv3_2 {
-	status = "disabled";
+	status = "ok";
 };
 
 &qupv3_se14_4uart {
-	status = "disabled";
+	power-domains = <&scmi_power 12>, <&scmi_perf 3>;
+	power-domain-names = "power", "perf";
+	status = "ok";
 };
 
 &qupv3_se17_4uart {
-	status = "disabled";
+	power-domains = <&scmi_power 4>, <&scmi_perf 0>;
+	power-domain-names = "power", "perf";
+	status = "ok";
 };
 
 &usb2 {
@@ -178,12 +186,12 @@
 
 &pcie2 {
 	interrupt-parent = <&qvm_vdev_gic>;
-	status = "disabled";
+	status = "ok";
 };
 
 &pcie3 {
 	interrupt-parent = <&qvm_vdev_gic>;
-	status = "disabled";
+	status = "ok";
 };
 
 &usb1 {

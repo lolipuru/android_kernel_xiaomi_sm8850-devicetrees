@@ -4,13 +4,12 @@
 #include <dt-bindings/ipclite-signals.h>
 
 &soc {
-	#address-cells = <1>;
-	#size-cells = <1>;
-	interrupt-parent = <&intc>;
+	#address-cells = <2>;
+	#size-cells = <2>;
 
 	ipcc_compute_l0: qcom,ipcc_compute_l0@443000 {
 		compatible = "qcom,ipcc";
-		reg = <0x443000 0x1000>;
+		reg = <0x0 0x443000 0x0 0x1000>;
 		interrupts = <GIC_SPI 72 IRQ_TYPE_LEVEL_HIGH>;
 		interrupt-controller;
 		#interrupt-cells = <3>;
@@ -20,11 +19,11 @@
 		compatible = "qcom,ipclite";
 		memory-region = <&global_sync_mem>;
 		hwlocks = <&tcsr_mutex 11>;
-		#address-cells = <1>;
-		#size-cells = <1>;
+		#address-cells = <2>;
+		#size-cells = <2>;
 		major_version = <1>;
 		minor_version = <0>;
-		feature_mask_low = <0x0003>;
+		feature_mask_low = <0x0007>;
 		feature_mask_high = <0x0000>;
 		global_par_custom_val = <48>;
 		ranges;

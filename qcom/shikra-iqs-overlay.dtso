@@ -6,10 +6,11 @@
 /dts-v1/;
 /plugin/;
 
-#include "shikra-evk.dtsi"
+#include "shikra-auto-evk.dtsi"
 
 / {
   model = "Qualcomm Technologies, Inc. Shikra IQS";
   compatible = "qcom,shikra-iqs", "qcom,shikra";
-  qcom,board-id = <0x20033 0x0>;
+  qcom,msm-id = <759 0x10000>;
+  qcom,board-id = <0x40033 0x0>;
 };

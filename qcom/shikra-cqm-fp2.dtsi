@@ -4,7 +4,6 @@
  */
 
 #include "shikra-cqm.dtsi"
-#include "shikra-lite-thermal.dtsi"
 #include "shikra-pmic-overlay-pm4125.dtsi"
 
 / {
