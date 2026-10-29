@@ -141,6 +141,7 @@ _platform_map = {
             {"name": "canoep-hdk-no-l3k-overlay.dtbo"},
             {"name": "canoep-hdk-overlay.dtbo"},
             {"name": "canoe-rumi-overlay.dtbo"},
+            {"name": "myron-sm8850-whale-overlay.dtbo"},
             {"name": "myron-sm8850-overlay.dtbo"},
             {"name": "pandora-sm8850-overlay.dtbo"},
             {"name": "popsicle-sm8850-overlay.dtbo"},
@@ -186,6 +187,7 @@ _platform_map = {
             },
         ],
         "dtbo_list": [
+            {"name": "myron-sm8850-whale-overlay.dtbo"},
             {"name": "myron-sm8850-overlay.dtbo"},
         ],
     },

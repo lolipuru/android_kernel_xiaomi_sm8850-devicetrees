@@ -37,6 +37,13 @@
 	};
 };
 
+&L14B {
+	regulator-min-microvolt = <3000000>;
+	regulator-max-microvolt = <3200000>;
+	qcom,init-voltage = <3000000>;
+	qcom,proxy-consumer-enable;
+};
+
 /* mitee vm */
 &reserved_memory {
 //	oem_vm_mem: oem_vm_region@f8800000 {
@@ -66,6 +73,23 @@
 	};
 };
 /* mitee vm */
+
+/* millm */
+&reserved_memory {
+	llm_mem: llm_mem {
+		compatible = "shared-dma-pool";
+		reusable;
+		guarantee;
+		size = <0x0 0x0>;
+	};
+};
+
+&soc {
+	millm: millm {
+		compatible = "xiaomi,millm";
+		memory-region = <&llm_mem>;
+	};
+};
 
 &tlmm {
 	/* FP_INT_N */
@@ -714,11 +738,27 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&usb_dp_aux_en_ls_1p2_active>, <&usb_dp_aux_en_ls_1p8_active>,
 	            <&usb_dp_aux_cb_ls_1p2_active>, <&usb_dp_aux_cb_ls_1p8_active>;
-	qcom,wcd_usbss = <&wcd_usbss>;
-	wcd_equ = <0xC0>;
-	wcd_equ_host = <0xC0>;
 	maximum_speed = "super-speed";
 	host-force-gen1;
+};
+
+&dwc3_0 {
+	snps,dis_u3_susphy_quirk;
+};
+
+&pmih010x_haptics {
+	qcom,vmax-mv = <1286>;
+	qcom,lra-period-us = <5882>;
+	qcom,brake-pattern = /bits/ 8 <0x00>;
+	qcom,brake-disable;
+	qcom,lra-f0-cal-count = <570>;
+	qcom,lra-f0-default = <170>;
+	qcom,lra-f0-max = <180>;
+	qcom,lra-f0-min = <160>;
+	qcom,rev_t_lra_us = <70>;
+	qcom,f0-vmax-mv = <1400>;
+	qcom,custom_vmax_mv = <8000>;
+	status = "ok";
 };
 
 &pmih010x_eusb2_repeater {

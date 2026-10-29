@@ -4,8 +4,8 @@
 	wsa_spkr_en1_pinctrl: wsa_spkr_en1_pinctrl {
 		compatible = "qcom,msm-cdc-pinctrl";
 		pinctrl-names = "aud_active", "aud_sleep";
-		pinctrl-0 = <&wsa_spkr_en1_active>;
-		pinctrl-1 = <&wsa_spkr_en1_sleep>;
+		pinctrl-0 = <&spkr_02_sd_n_active>;
+		pinctrl-1 = <&spkr_02_sd_n_sleep>;
 		qcom,lpi-gpios;
 		status = "disabled";
 	};
@@ -13,8 +13,8 @@
 	wsa_spkr_en2_pinctrl: wsa_spkr_en2_pinctrl {
 		compatible = "qcom,msm-cdc-pinctrl";
 		pinctrl-names = "aud_active", "aud_sleep";
-		pinctrl-0 = <&wsa_spkr_en2_active>;
-		pinctrl-1 = <&wsa_spkr_en2_sleep>;
+		pinctrl-0 = <&spkr_13_sd_n_active>;
+		pinctrl-1 = <&spkr_13_sd_n_sleep>;
 		qcom,lpi-gpios;
 		status = "disabled";
 	};
@@ -62,6 +62,53 @@
 		"VA DMIC3", "Digital Mic3",
 		"VA DMIC4", "Digital Mic4",
 		"VA DMIC5", "Digital Mic5";
+
+	qcom,model = "canoe-mtp-snd-card";
+	qcom,wcd-disabled = <1>;
+	qcom,wsa-max-devs = <0>;
+	qcom,mi2s-tdm-is-hw-vote-needed = <1>, <1>, <1>, <1>, <1>, <1>, <1>;
+	qcom,tdm-max-slots = <4>;
+	qcom,tdm-clk-attribute = <4>, <4>, <4>, <4>, <4>, <4>, <4>, <4>;
+	qcom,audio-core-list = <0>, <1>;
+	qcom,dedicated-wsa2;
+	qcom,msm-mbhc-usbc-audio-supported = <0>;
+	qcom,wcn-bt = <1>;
+	qcom,ext-disp-audio-rx = <1>;
+	qcom,tdm-audio-intf = <1>;
+	qcom,pri-mi2s-gpios = <&pri_tdm_pinctrl>;
+	qcom,cdc-dmic-enable-gpios = <&cdc_dmic_enable_pinctrl>;
+	qcom,cdc-dmic01-gpios = <&cdc_dmic01_gpios>;
+	qcom,cdc-dmic23-gpios = <&cdc_dmic23_gpios>;
+	qcom,cdc-dmic45-gpios = <&cdc_dmic45_gpios>;
+	asoc-codec = <&stub_codec>, <&lpass_cdc>,
+		     <&wcd939x_codec>, <&swr_haptics>;
+	asoc-codec-names = "msm-stub-codec.1", "lpass-cdc",
+			   "wcd939x_codec", "swr-haptics";
+	qcom,msm_audio_ssr_devs = <&audio_gpr>, <&lpi_tlmm>,
+			<&lpass_cdc>, <&lpass_bt_swr>;
+	qcom,upd_backends_used = "wsa";
+	qcom,upd_lpass_reg_addr = <0x6B00418 0x6B14020>;
+	qcom,upd_ear_pa_reg_addr = <0x3430>;
+};
+
+&wcd939x_codec {
+	status = "disabled";
+};
+
+&wcd939x_rst_gpio {
+	status = "disabled";
+};
+
+&swr0 {
+	status = "disabled";
+};
+
+&wsa884x_0220 {
+	status = "disabled";
+};
+
+&wsa884x_0221 {
+	status = "disabled";
 };
 
 &wcd_usbss {

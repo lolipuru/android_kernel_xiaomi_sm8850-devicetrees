@@ -8,16 +8,16 @@
 
 	mtdoops_pmsg_mem: mtdoops_pmsg_region {
 		compatible = "mtdoops";
-		reg = <0x0 0xff400000 0x0 0x400000>;
-		console-size = <0x200000>;
-		pmsg-size = <0x200000>;
+		reg = <0x0 0xff400000 0x0 0x200000>;
+		console-size = <0x100000>;
+		pmsg-size = <0x100000>;
 	};
 
 	bootmonitor_pmsg_mem: bootmonitor_pmsg_region {
 		compatible = "bootmonitor";
-		reg = <0x0 0xff400000 0x0 0x400000>;
-		console-size = <0x200000>;
-		pmsg-size = <0x200000>;
+		reg = <0x0 0xff400000 0x0 0x200000>;
+		console-size = <0x100000>;
+		pmsg-size = <0x100000>;
 	};
 
 	gpio_keys {

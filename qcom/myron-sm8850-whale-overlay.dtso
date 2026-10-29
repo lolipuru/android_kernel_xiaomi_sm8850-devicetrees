@@ -1,0 +1,17 @@
+/dts-v1/;
+/plugin/;
+
+#include "myron-sm8850.dtsi"
+#include "myron-charger-common.dtsi"
+#include "myron-nxp-nfc-common.dtsi"
+#include "myron-sm8850-touch.dtsi"
+
+
+/ {
+	model = "Qualcomm Technologies, Inc. Myron based on SM8850";
+	compatible = "qcom,canoe-mtp", "qcom,canoe", "qcom,canoep-mtp", "qcom,canoep",
+			   "qcom,mtp";
+	qcom,msm-id = <723 0x30000>, <722 0x30000>, <743 0x20000>, <743 0x10000>;
+	qcom,board-id = <8 0>;
+	xiaomi,miboard-id = <0x4 0>;
+};
