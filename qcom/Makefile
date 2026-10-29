@@ -43,8 +43,7 @@ CANOE_BOARDS += \
 		canoep-hdk-overlay.dtbo \
 		alor-interposer-mtp-overlay.dtbo \
 		alor-interposer-rcm-overlay.dtbo \
-		alor-interposer-qrd-st54l-pandeiro-overlay.dtbo \
-		myron-sm8850-overlay.dtbo
+		alor-interposer-qrd-st54l-pandeiro-overlay.dtbo
 
 NOAPQ_CANOE_BOARDS += \
 		canoe-rumi-overlay.dtbo
@@ -53,6 +52,14 @@ canoe-dtb-$(CONFIG_ARCH_CANOE) += \
 	$(call add-overlays, $(CANOE_BOARDS) $(NOAPQ_CANOE_BOARDS),$(CANOE_BASE_DTB))\
 	$(call add-overlays, $(CANOE_BOARDS) $(APQ_CANOE_BOARDS),$(CANOE_APQ_BASE_DTB))
 canoe-overlays-dtb-$(CONFIG_ARCH_CANOE) += $(CANOE_BOARDS) $(NOAPQ_CANOE_BOARDS) $(CANOE_BASE_DTB) $(CANOE_APQ_BASE_DTB)
+
+MYRON_BASE_DTB += canoe.dtb canoe-v2.dtb canoe-tp.dtb canoe-tp-v2.dtb canoep.dtb canoep-v2.dtb
+
+MYRON_BOARDS += myron-sm8850-overlay.dtbo
+
+canoe-dtb-$(CONFIG_ARCH_CANOE) += \
+	$(call add-overlays, $(MYRON_BOARDS),$(MYRON_BASE_DTB))
+canoe-overlays-dtb-$(CONFIG_ARCH_CANOE) += $(MYRON_BOARDS)
 
 ALOR_BASE_DTB += alor.dtb
 ALOR_APQ_BASE_DTB += alorp.dtb alorp-iot.dtb
