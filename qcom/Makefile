@@ -64,6 +64,13 @@ canoe-dtb-$(CONFIG_ARCH_CANOE) += \
 	$(call add-overlays, $(MYRON_WHALE_BOARDS),$(MYRON_WHALE_BASE_DTB))
 canoe-overlays-dtb-$(CONFIG_ARCH_CANOE) += $(MYRON_BOARDS) $(MYRON_WHALE_BOARDS)
 
+PUDDING_BASE_DTB += canoe.dtb canoe-v2.dtb canoe-tp.dtb canoe-tp-v2.dtb canoep.dtb canoep-v2.dtb
+PUDDING_BOARDS += pudding-sm8850-overlay.dtbo
+
+canoe-dtb-$(CONFIG_ARCH_CANOE) += \
+	$(call add-overlays, $(PUDDING_BOARDS),$(PUDDING_BASE_DTB))
+canoe-overlays-dtb-$(CONFIG_ARCH_CANOE) += $(PUDDING_BOARDS)
+
 ALOR_BASE_DTB += alor.dtb
 ALOR_APQ_BASE_DTB += alorp.dtb alorp-iot.dtb
 

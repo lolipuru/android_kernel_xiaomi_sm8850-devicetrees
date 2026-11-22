@@ -193,6 +193,47 @@ _platform_map = {
             {"name": "myron-sm8850-overlay.dtbo"},
         ],
     },
+    "pudding": {
+        "dtb_list": [
+            # keep sorted
+            {"name": "canoe.dtb"},
+            {
+                "name": "canoep.dtb",
+                "apq": True,
+            },
+            {
+                "name": "canoep-tp.dtb",
+                "apq": True,
+            },
+            {
+                "name": "canoep-tp-v2.dtb",
+                "apq": True,
+            },
+            {
+                "name": "canoep-v2.dtb",
+                "apq": True,
+            },
+            {"name": "canoe-tp.dtb"},
+            {"name": "canoe-tp-v2.dtb"},
+            {"name": "canoe-v2.dtb"},
+            {"name": "whale.dtb"},
+            {
+                "name": "whalep.dtb",
+                "apq": True,
+            },
+            {
+                "name": "canoep-sg.dtb",
+                "apq": True,
+            },
+            {
+                "name": "canoep-sg-v2.dtb",
+                "apq": True,
+            },
+        ],
+        "dtbo_list": [
+            {"name": "pudding-sm8850-overlay.dtbo"},
+        ],
+    },
     "alor": {
         "dtb_list": [
             # keep sorted

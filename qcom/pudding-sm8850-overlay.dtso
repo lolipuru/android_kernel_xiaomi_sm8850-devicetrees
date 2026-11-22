@@ -10,6 +10,8 @@
 #include "pudding-nfc-common.dtsi"
 #include "pudding-charger-common.dtsi"
 #include "pudding-sm8850-touch.dtsi"
+#include "audio/pudding-audio-mtp.dtsi"
+#include "camera/pudding-sm8850-camera-sensor.dtsi"
 
 / {
 	model = "Qualcomm Technologies, Inc. Pudding based on SM8850";

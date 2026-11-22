@@ -1,0 +1,23 @@
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/clock/qcom,gcc-canoe.h>
+#include <dt-bindings/clock/qcom,camcc-canoe.h>
+#include <dt-bindings/clock/qcom,cambistmclkcc-canoe.h>
+#include <dt-bindings/interconnect/qcom,canoe.h>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/regulator/qcom,rpmh-regulator-levels.h>
+#include <dt-bindings/clock/qcom,rpmh.h>
+
+#include "pudding-sm8850-camera-sensor.dtsi"
+
+/ {
+	model = "Qualcomm Technologies, Inc. Pudding based on SM8850";
+	compatible = "qcom,canoe-mtp", "qcom,canoe", "qcom,canoep-mtp", "qcom,canoep", "qcom,mtp";
+	qcom,msm-id = <660 0x10000>, <660 0x20000>, <661 0x10000>, <661 0x20000>,
+		      <0x1000294 0x10000>, <0x1000294 0x20000>,
+		      <0x1000295 0x10000>, <0x1000295 0x20000>;
+	qcom,board-id = <8 0>;
+	xiaomi,miboard-id = <0x2 0>;
+};
+
