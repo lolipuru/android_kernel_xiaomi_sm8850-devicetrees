@@ -35,6 +35,8 @@
 		qcom,mdss-dsi-panel-blackness-level = <3230>;
 		qcom,mdss-dsi-dma-schedule-line = <1>;
 		qcom,mdss-dsi-dma-schedule-window = <50>;
+
+		qcom,mdss-disable-cesta-hw-sleep;
 		mi,sf-set-doze-brightness;
 
 		qcom,mdss-dsi-display-timings {

@@ -35,6 +35,8 @@
 		qcom,mdss-dsi-panel-blackness-level = <3230>;
 		qcom,mdss-dsi-dma-schedule-line = <1>;
 		qcom,mdss-dsi-dma-schedule-window = <50>;
+
+		qcom,mdss-disable-cesta-hw-sleep;
 		mi,sf-set-doze-brightness;
 
 		qcom,mdss-dsi-display-timings {
@@ -441,7 +443,7 @@
 					//Video Trim
 					39 00 00 40 00 00 03 F0 AA 14
 					39 00 00 40 00 00 02 C1 0B
-					39 00 00 40 00 00 20 C3 01 21 20 03 A8 03 A8 03 A8 03 A8 03 A8 03 A8 03 A8 00 C7 00 C7 00 C7 00 C7 00 31 00 31 00 31
+					39 00 00 40 00 00 20 C3 41 11 04 03 A7 03 A7 03 A7 03 A7 03 A7 03 A7 03 A7 00 C7 00 C7 00 C7 00 C7 00 31 00 31 00 31
 					//AOD Save power consumption
 					39 00 00 40 00 00 03 F0 AA 10
 					39 00 00 40 00 00 02 65 0A
@@ -858,7 +860,7 @@
 					//Video Trim
 					39 00 00 40 00 00 03 F0 AA 14
 					39 00 00 40 00 00 02 C1 0B
-					39 00 00 40 00 00 20 C3 01 21 20 03 A8 03 A8 03 A8 03 A8 03 A8 03 A8 03 A8 00 C7 00 C7 00 C7 00 C7 00 31 00 31 00 31
+					39 00 00 40 00 00 20 C3 41 11 04 03 A7 03 A7 03 A7 03 A7 03 A7 03 A7 03 A7 00 C7 00 C7 00 C7 00 C7 00 31 00 31 00 31
 					//AOD Save power consumption
 					39 00 00 40 00 00 03 F0 AA 10
 					39 00 00 40 00 00 02 65 0A
@@ -1275,7 +1277,7 @@
 					//Video Trim
 					39 00 00 40 00 00 03 F0 AA 14
 					39 00 00 40 00 00 02 C1 0B
-					39 00 00 40 00 00 20 C3 01 21 20 03 A8 03 A8 03 A8 03 A8 03 A8 03 A8 03 A8 00 C7 00 C7 00 C7 00 C7 00 31 00 31 00 31
+					39 00 00 40 00 00 20 C3 41 11 04 03 A7 03 A7 03 A7 03 A7 03 A7 03 A7 03 A7 00 C7 00 C7 00 C7 00 C7 00 31 00 31 00 31
 					//AOD Save power consumption
 					39 00 00 40 00 00 03 F0 AA 10
 					39 00 00 40 00 00 02 65 0A
