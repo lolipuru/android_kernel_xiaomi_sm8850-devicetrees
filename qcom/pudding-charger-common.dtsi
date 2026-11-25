@@ -622,6 +622,12 @@
 
 &connector_antiburn {
 	status = "ok";
+	support_elaboration_anti_strategy = <1>;
+	trigger_temp = <65000>;
+	recharge_temp = <55000>;
+	comb_sensorboard_con_trigger_temp = <60000>;
+	comb_rate_conn_trigger_temp = <35000>;
+	max_thermal_board_temp = <50>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&anti_burn_mos_ctrl_default>;
 	mos-ctrl-gpio = <&pmih010x_gpios 7 0>;
@@ -632,7 +638,7 @@
 	monitor_interval = <1000>;
 	thermal-zone-name = "conn_therm";
 	thermal-zone-name2 = "conn_therm2";
-	max_temp_increase_rate = <4>; /*ntc temperature increase speed per second.*/
+	max_temp_increase_rate = <4000>; /* milli-celsius per second */
 	otg_boost_src = <2>; /* BOOST_SRC_EXTERNAL */
 	en_src = <0>; /* OTG_EN_BOOST */
 	thermal-board-temp-name = "board_sensor_therm";
