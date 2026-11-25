@@ -92,6 +92,39 @@
 	qcom,upd_ear_pa_reg_addr = <0x3430>;
 };
 
+&wcd939x_codec {
+	status = "ok";
+	qcom,cdc-vdd-mic-bias-voltage = <3400000 3400000>;
+	qcom,cdc-micbias1-mv = <2750>;
+	qcom,cdc-micbias2-mv = <2750>;
+	qcom,cdc-micbias3-mv = <2750>;
+	qcom,cdc-micbias4-mv = <2750>;
+};
+
+&swr0 {
+	status = "disabled";
+};
+
+&wsa_spkr_en02 {
+	status = "disabled";
+};
+
+&wsa_spkr_en13 {
+	status = "disabled";
+};
+
+&cdc_dmic01_gpios {
+	status = "disabled";
+};
+
+&cdc_dmic23_gpios {
+	status = "disabled";
+};
+
+&cdc_dmic45_gpios {
+	status = "disabled";
+};
+
 &wcd_usbss {
 	reset-gpios = <&tlmm 162 0>;
 	pinctrl-names = "usbss_active", "usbss_sleep";

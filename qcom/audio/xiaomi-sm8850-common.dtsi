@@ -27,3 +27,9 @@
 &cdc_dmic67_gpios {
 	status = "disabled";
 };
+
+&lpi_dmic1_clk_active {
+	config {
+		drive-strength = <4>;
+	};
+};
