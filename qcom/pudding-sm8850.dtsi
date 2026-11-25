@@ -180,6 +180,26 @@
 	wcd-usb-sbu-compliance;
 };
 
+&pmih010x_haptics {
+	qcom,vmax-mv = <1250>;
+	qcom,lra-period-us = <5714>;
+	qcom,brake-pattern = /bits/ 8 <0x20 0x20 0x20 0x20 0x20 0x20>;
+	qcom,swr-brake-mode = <1>;
+	qcom,swr-brake-pattern = /bits/ 8 <0x00 0x28 0x1a 0x10 0x08 0x06>;
+	qcom,swr-brake-vmax-mv = <8700>;
+	qcom,over-drive-mv = <8700>;
+	qcom,over-drive-half-cycles = /bits/ 8 <2>;
+	qcom,over-brake-half-cycles = /bits/ 8 <6>;
+	qcom,freq-detect-in-play;
+	qcom,lra-f0-cal-count = <570>;
+	qcom,lra-f0-default = <170>;
+	qcom,lra-f0-max = <180>;
+	qcom,lra-f0-min = <160>;
+	qcom,f0-vmax-mv = <1250>;
+	qcom,custom_vmax_mv = <8000>;
+	status = "ok";
+};
+
 &pmih010x_eusb2_repeater {
 	qcom,param-override-seq-global =
 		<0x00 0x50
