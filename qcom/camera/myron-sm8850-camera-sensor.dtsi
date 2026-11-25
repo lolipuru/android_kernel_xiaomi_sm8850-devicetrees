@@ -485,6 +485,13 @@
 	};
 };
 
+&pmh0101_flash_led0 {
+	led-sources = <1>;
+	led-max-microamp = <500000>;
+	flash-max-microamp = <500000>;
+	flash-max-timeout-us = <1280000>;
+};
+
 &cam_cci0 {
 	pinctrl-0 = <&myron_cci_i2c_scl0_active &myron_cci_i2c_sda0_active>;
 	pinctrl-2 = <&myron_cci_i2c_scl1_active &myron_cci_i2c_sda1_active>;

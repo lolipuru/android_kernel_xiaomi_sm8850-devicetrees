@@ -561,6 +561,13 @@ qcom,cam-res-mgr {
 };
 };
 
+&pmh0101_flash_led0 {
+	led-sources = <1>;
+	led-max-microamp = <500000>;
+	flash-max-microamp = <1000000>;
+	flash-max-timeout-us = <300000>;
+};
+
 &cam_cci0 {
 pinctrl-2 = <&pudding_cci_i2c_scl1_active>, <&pudding_cci_i2c_sda1_active>;
 pinctrl-0 = <&pudding_cci_i2c_scl0_active>, <&pudding_cci_i2c_sda0_active>;
