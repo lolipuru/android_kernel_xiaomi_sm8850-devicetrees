@@ -268,6 +268,7 @@
 	support_reverse_quick_charge;
 	support_revchg_screenon;
 	support_sw_aicl;
+	pd_authing_default_icl;
 };
 
 &mca_strategy_quick_charge {
@@ -571,7 +572,7 @@
 &smart_charge {
 	status = "ok";
 	cell_type = <1>;
-	// support_cc_ichg;
+	support_cc_ichg;
 	/* cyclecount delta_ichg*/
 	cc_ichg_cfg = <
 		800 100
@@ -969,7 +970,8 @@
 		"0", "16", "0x0E018207", "params_magnet_black_car_30W_mag", "params_magnet_black_car_30W_mag", "params_magnet_black_car_30W_mag", 
 		"0", "16", "0x02010B03", "params_p11u_trx_rev_22P5W_mag", "params_p11u_trx_rev_22P5W_mag", "params_p11u_trx_rev_22P5W_mag", 
 		"0", "16", "0x09018203", "params_black_fan_mag", "params_black_fan_mag", "params_black_fan_mag", 
-		"0", "16", "0x09018207", "params_black_short_mike_mag", "params_black_short_mike_mag", "params_black_short_mike_mag";
+		"0", "16", "0x09018207", "params_black_short_mike_mag", "params_black_short_mike_mag", "params_black_short_mike_mag",
+		"0", "16", "0x09058903", "params_magnet_bank", "params_magnet_bank", "params_magnet_bank";
 
 	params_default = <0x9b2d9b1e 0x961e951e 0x941e8728 0x87288728 0x87288728 0x87288728 0x87288728 0x87288728>;
 	params_2_1_m2_50W = <0x8e328e32 0x8e328e32 0x8e328519 0x85148414 0x83147c1e 0x7c1e7e19 0x7e197f19 0x8014801e>;

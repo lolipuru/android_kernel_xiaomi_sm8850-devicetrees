@@ -44,7 +44,10 @@
 		compatible = "mca,buckchg_jeita";
 		vbat_high_hyst = <50>;
 		vbat_low_hyst = <50>;
+		vterm_buffer = <20>;
 		vbat_low_cold_hyst = <50>;
+		support_weak_chg_vterm = <1>;
+		weak_chg_vterm_cfg = <10 200>;
 		volt_para1 =
 			"4200", "670",
 			"4500", "450";
@@ -89,6 +92,8 @@
 	};
 
 	mca_buckchg_jeita_gbl_para: mca_buckchg_jeita_gbl_para {
+		support_weak_chg_vterm = <1>;
+		weak_chg_vterm_cfg = <10 200>;
 		volt_para1 =
 			"4200", "670",
 			"4500", "450";
@@ -152,6 +157,8 @@
 		chg_batt_auth_failed = <2000>;
 		ffc_temp_low = <20>;
 		ffc_temp_high = <48>;
+		allow_start_ffc_batt_soc_para =
+			"65535", "95";
 		pmic_fv_compensation = <0>;
 		pmic_wls_fv_compensation = <0>;
 		pmic_iterm_compensation = <30>;
@@ -177,7 +184,6 @@
 		max_vbat = <4400>;
 		recharge_vbat = <4250>;
 		en_buck_parallel_chg = <0>;
-		curr_terminate_ratio = <110>;
 		buck_icl_fcc_curr = <0 0>;
 		die_temp_max = <125>;
 		adp_temp_max = <125>;
@@ -192,6 +198,7 @@
 		ibus_dec_hysteresis = <200 200 100>;
 		open_path_th = <800 600 400>;
 		ibus_compensation = <0 0 0>;
+		adapter_ibus_compensation = <100>;
 		support_mode = <7>;
 		qc3_max_vbus_limit = <9500>;
 		qc3_max_ibus_limit = <2500>;
@@ -282,7 +289,7 @@
 		bq,ignore-digest-debug;
 		bq,shutdown-delay-enable;
 		fg_type = <0>;
-		clear_CC_per_hundred = <1>;
+		clear_CC_per_hundred = <0>;
 		soc_decimal = <
 			0  38
 			10 35
@@ -301,6 +308,7 @@
 		vterm_delta = <7>;
 		force_vterm_delta = <30>;
 		support_fl4p0 = <0>;
+		lossless-rechg-nor = <1>;
 		status = "disabled";
 		support_extreme_cold = <1>;
 		extreme_cold_temp_compemsation =
@@ -314,6 +322,7 @@
 	mca_strategy_basic_wireless_class: mca_strategy_basic_wireless_class {
 		compatible = "mca,basic_wireless";
 		support_q_value = <0>;
+		support_q_value_with_case = <0>;
 		support_multi_buck = <0>;
 		// low_inductance_tx_50W, low_inductance_tx_80W
 		tx_q1 = /bits/ 8 <0x15 0x15>;
@@ -334,11 +343,13 @@
 		pmic_fv_compensation = <0>;
 		soc_limit_fcc = <6000>;
 		pmic_volt_accu = <50>;
+		enable-gl-re-wa = <0>;
 
 		support-dynamic-cp = <0>;
 		dynamic-cp-uuid = <0x09010305>;
 		dynamic-cp-min-tx-adapter = <14>;
 		dynamic-cp-4to2-threshold = <5300>;
+		dynamic-cp-2-1-max-fcc = <9200>;
 
 		adapter_cmd_type_para =
 			"0xF0", "adapter_cmd_type_f0",
@@ -1390,22 +1401,80 @@ mca_sc96281_fod_data: mca_sc96281_fod_data {
 		fod_params_default =
 			"0", "16", "0x00000000", "params_default", "params_default", "params_default";
 		params_default = /bits/ 8 <
-			142  80
-			142  80
-			142  80
-			142  60
-			142  60
-			142  60
-			142  60
-			142  60
-			142  60
-			142  60
-			142  60
-			142  60
-			142  60
-			142  60
-			142  60
-			142  60
+			155 45
+			155 30
+			150 30
+			149 30
+			148 30
+			135 40
+			135 40
+			135 40
+			135 40
+			135 40
+			135 40
+			135 40
+			135 40
+			135 40
+			135 40
+			135 40
+		>;
+
+		fod_params_2_1 =
+			"0", "16", "0x09010305", "params_low_inductance_80w_2_1", "params_low_inductance_80w_2_1_mag", "params_low_inductance_80w_2_1_mag_thick";
+
+		params_low_inductance_80w_2_1 = /bits/ 8 <
+			130 20
+			130 10
+			130 10
+			130 10
+			130 10
+			130 10
+			130 10
+			130 10
+			130 10
+			130 10
+			130 10
+			130 10
+			131 10
+			131 10
+			132 10
+			132 10
+		>;
+		params_low_inductance_80w_2_1_mag = /bits/ 8 <
+			130 20
+			130 10
+			130 10
+			130 10
+			130 10
+			130 10
+			130 10
+			130 10
+			130 10
+			130 10
+			130 10
+			130 10
+			131 10
+			131 10
+			132 10
+			132 10
+		>;
+		params_low_inductance_80w_2_1_mag_thick = /bits/ 8 <
+			130 10
+			130 6
+			130 6
+			130 6
+			130 10
+			130 10
+			130 10
+			130 10
+			130 10
+			130 10
+			130 10
+			130 10
+			131 10
+			132 10
+			132 10
+			134 10
 		>;
 
 		/* type, length, uuid, params */
@@ -1430,7 +1499,13 @@ mca_sc96281_fod_data: mca_sc96281_fod_data {
 			"0", "16", "0x07030801", "params_power_bank_30W", "params_power_bank_30W_mag", "params_power_bank_30W_mag",
 			"0", "16", "0x02010203", "params_trx_rev_22P5W", "params_trx_rev_22P5W_mag", "params_trx_rev_22P5W_mag",
 			"0", "16", "0x09018B07", "params_magnet_30W", "params_magnet_30W_mag", "params_magnet_30W_mag",
-			"0", "16", "0x09058907", "params_magnet_2in1_30W_mag", "params_magnet_2in1_30W_mag", "params_magnet_2in1_30W_mag";
+			"0", "16", "0x09058907", "params_magnet_2in1_30W", "params_magnet_2in1_30W_mag", "params_magnet_2in1_30W_mag",
+			"0", "16", "0x07030802", "params_black_vertical_30W_mag", "params_black_vertical_30W_mag", "params_black_vertical_30W_mag",
+			"0", "16", "0x0E018207", "params_magnet_black_car_30W_mag", "params_magnet_black_car_30W_mag", "params_magnet_black_car_30W_mag",
+			"0", "16", "0x02010B03", "params_p11u_trx_rev_22P5W_mag", "params_p11u_trx_rev_22P5W_mag", "params_p11u_trx_rev_22P5W_mag",
+			"0", "16", "0x09018203", "params_black_fan_mag", "params_black_fan_mag", "params_black_fan_mag",
+			"0", "16", "0x09018207", "params_black_short_mike_mag", "params_black_short_mike_mag", "params_black_short_mike_mag",
+			"0", "16", "0x09058903", "params_magnet_bank", "params_magnet_bank", "params_magnet_bank";
 		/* gain, offset */
 		params_k8_100W = /bits/ 8 <
 			81   59
@@ -2190,6 +2265,25 @@ mca_sc96281_fod_data: mca_sc96281_fod_data {
 			132  2
 			132  2
 		>;
+
+		params_magnet_2in1_30W = /bits/ 8 <
+			130  16
+			130  16
+			130  16
+			130  10
+			130  10
+			130  10
+			132  10
+			134  10
+			134  10
+			134  10
+			134  10
+			134  10
+			134  10
+			134  10
+			134  10
+		>;
+
 		params_magnet_2in1_30W_mag = /bits/ 8 <
 			130  16
 			130  16
@@ -2209,7 +2303,120 @@ mca_sc96281_fod_data: mca_sc96281_fod_data {
 			134  10
 	>;
 
-	};
+		params_black_vertical_30W_mag = /bits/ 8 <
+			155 45
+			155 30
+			150 30
+			149 30
+			148 30
+			140 30
+			150 10
+			150 0
+			138 30
+			140 20
+			140 20
+			141 20
+			141 15
+			141 5
+			141 5
+			141 5
+		>;
+
+		params_magnet_black_car_30W_mag = /bits/ 8 <
+			155 45
+			155 30
+			150 30
+			149 30
+			148 30
+			140 30
+			150 10
+			150 0
+			138 30
+			140 20
+			140 20
+			141 20
+			141 15
+			141 5
+			141 5
+			141 5
+		>;
+
+		params_p11u_trx_rev_22P5W_mag = /bits/ 8 <
+			155 60
+			155 45
+			150 50
+			149 35
+			148 45
+			140 40
+			150 40
+			150 40
+			138 40
+			140 40
+			140 40
+			141 40
+			141 40
+			141 40
+			141 40
+			141 40
+		>;
+
+		params_black_fan_mag = /bits/ 8 <
+			155 60
+			155 45
+			150 50
+			149 35
+			148 45
+			140 40
+			150 40
+			150 40
+			138 40
+			140 40
+			140 40
+			141 40
+			141 40
+			141 40
+			141 40
+			141 40
+		>;
+
+		params_black_short_mike_mag = /bits/ 8 <
+			155 60
+			155 45
+			150 50
+			149 35
+			148 45
+			140 40
+			150 40
+			150 40
+			138 40
+			140 40
+			140 40
+			141 40
+			141 40
+			141 40
+			141 40
+			141 40
+		>;
+
+		params_magnet_bank = /bits/ 8 <
+			130 50
+			130 40
+			130 30
+			130 20
+			130 20
+			130 20
+			130 20
+			130 20
+			130 20
+			130 20
+			130 20
+			130 20
+			130 20
+			130 20
+			130 20
+			130 20
+		>;
+};
 
 	charger_partition: charger_partition {
 		compatible = "xiaomi,charger_partition";
