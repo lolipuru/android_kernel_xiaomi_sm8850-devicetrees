@@ -121,6 +121,11 @@
 				qcom,qmi-dev-name = "bcl";
 				#cooling-cells = <2>;
 			};
+
+			modem_bcl_mtpl_dsc: modem_bcl_mtpl_dsc {
+				qcom,qmi-dev-name = "modem_bcl_mtpl_dsc";
+				#cooling-cells = <2>;
+			};
 		};
 	};
 

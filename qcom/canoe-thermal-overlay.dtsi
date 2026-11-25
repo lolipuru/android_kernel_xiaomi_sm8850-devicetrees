@@ -57,7 +57,8 @@
 		cooling-maps {
 			lbat_lvl0 {
 				trip = <&b_bcl_lvl0>;
-				cooling-device = <&modem_bcl 0 1>,
+				cooling-device = <&modem_bcl_mtpl_dsc 0 1>,
+						 <&modem_bcl 0 1>,
 						 <&msm_gpu 0 1>;
 			};
 		};
@@ -90,7 +91,8 @@
 		cooling-maps {
 			lbat_lvl1 {
 				trip = <&b_bcl_lvl1>;
-				cooling-device = <&modem_bcl 0 2>,
+				cooling-device = <&modem_bcl_mtpl_dsc 0 2>,
+						 <&modem_bcl 0 2>,
 						 <&msm_gpu 0 2>;
 			};
 		};
