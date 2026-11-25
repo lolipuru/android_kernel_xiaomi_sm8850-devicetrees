@@ -6,12 +6,15 @@
 /dts-v1/;
 /plugin/;
 
+#include <dt-bindings/clock/qcom,rpmh.h>
 #include "pudding-sm8850.dtsi"
 #include "pudding-nfc-common.dtsi"
 #include "pudding-charger-common.dtsi"
 #include "pudding-sm8850-touch.dtsi"
 #include "audio/pudding-audio-mtp.dtsi"
+#include "bt/canoe-wcn786x-bt.dtsi"
 #include "camera/pudding-sm8850-camera-sensor.dtsi"
+#include "wlan/canoe-peach-cnss.dtsi"
 
 / {
 	model = "Qualcomm Technologies, Inc. Pudding based on SM8850";
@@ -22,4 +25,10 @@
 		      <0x1000295 0x10000>, <0x1000295 0x20000>;
 	qcom,board-id = <8 0>;
 	xiaomi,miboard-id = <0x2 0>;
+};
+
+&wlan_peach {
+	clocks = <&rpmhcc RPMH_RF_CLK1>;
+	clock-names = "rf_clk";
+	msix-match-addr = <0x3000>;
 };

@@ -30,3 +30,9 @@
 	qcom,board-id = <8 0>;
 	xiaomi,miboard-id = <0x4 0>;
 };
+
+&wlan_peach {
+	clocks = <&rpmhcc RPMH_RF_CLK1>;
+	clock-names = "rf_clk";
+	msix-match-addr = <0x3000>;
+};
