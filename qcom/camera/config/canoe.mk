@@ -19,7 +19,9 @@ dtbo-$(CONFIG_ARCH_CANOE)   += canoe-camera-v2.dtbo \
 	alor-camera-sensor-rcm-peach.dtbo \
 	myron-sm8850-camera-sensor.dtbo \
 	pudding-sm8850-camera-sensor.dtbo \
-	nezha-sm8850-camera-sensor.dtbo
+	nezha-sm8850-camera-sensor.dtbo \
+	pandora-sm8850-camera-sensor.dtbo \
+	popsicle-sm8850-camera-sensor.dtbo
 dtbo-$(CONFIG_ARCH_CHORA) += chora-camera.dtbo \
 	chora-camera-sensor-mtp.dtbo \
 	chora-camera-sensor-qrd.dtbo \

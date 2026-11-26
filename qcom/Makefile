@@ -78,6 +78,20 @@ canoe-dtb-$(CONFIG_ARCH_CANOE) += \
 	$(call add-overlays, $(NEZHA_BOARDS),$(NEZHA_BASE_DTB))
 canoe-overlays-dtb-$(CONFIG_ARCH_CANOE) += $(NEZHA_BOARDS)
 
+PANDORA_BASE_DTB += canoe.dtb canoe-v2.dtb canoe-tp.dtb canoe-tp-v2.dtb canoep.dtb canoep-v2.dtb
+PANDORA_BOARDS += pandora-sm8850-overlay.dtbo
+
+canoe-dtb-$(CONFIG_ARCH_CANOE) += \
+	$(call add-overlays, $(PANDORA_BOARDS),$(PANDORA_BASE_DTB))
+canoe-overlays-dtb-$(CONFIG_ARCH_CANOE) += $(PANDORA_BOARDS)
+
+POPSICLE_BASE_DTB += canoe.dtb canoe-v2.dtb canoe-tp.dtb canoe-tp-v2.dtb canoep.dtb canoep-v2.dtb
+POPSICLE_BOARDS += popsicle-sm8850-overlay.dtbo
+
+canoe-dtb-$(CONFIG_ARCH_CANOE) += \
+	$(call add-overlays, $(POPSICLE_BOARDS),$(POPSICLE_BASE_DTB))
+canoe-overlays-dtb-$(CONFIG_ARCH_CANOE) += $(POPSICLE_BOARDS)
+
 ALOR_BASE_DTB += alor.dtb
 ALOR_APQ_BASE_DTB += alorp.dtb alorp-iot.dtb
 
