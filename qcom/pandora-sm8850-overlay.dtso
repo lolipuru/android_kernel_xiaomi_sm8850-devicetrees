@@ -6,11 +6,15 @@
 /dts-v1/;
 /plugin/;
 
+#include <dt-bindings/clock/qcom,rpmh.h>
 #include "pandora-sm8850.dtsi"
 #include "pandora-uwb-common.dtsi"
 #include "pandora-nxp-nfc-common.dtsi"
 #include "pandora-charger-common.dtsi"
 #include "pandora-sm8850-touch.dtsi"
+#include "audio/pandora-audio-mtp.dtsi"
+#include "bt/canoe-peach-bt.dtsi"
+#include "wlan/canoe-peach-cnss.dtsi"
 
 / {
 	model = "Qualcomm Technologies, Inc. Pandora based on SM8850";
@@ -21,4 +25,10 @@
 		      <0x1000295 0x10000>, <0x1000295 0x20000>;
 	qcom,board-id = <8 0>;
 	xiaomi,miboard-id = <0x3 0>;
+};
+
+&wlan_peach {
+	clocks = <&rpmhcc RPMH_RF_CLK1>;
+	clock-names = "rf_clk";
+	msix-match-addr = <0x3000>;
 };
