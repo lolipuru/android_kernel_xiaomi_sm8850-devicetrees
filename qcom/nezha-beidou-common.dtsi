@@ -110,7 +110,9 @@
                 rsmc_vc2_default_value = <0>;
 		/* Power Config */
 		rsmc-tcxo-vcc-type = <1>;
-                rsmc-pa-dcdc-supply = <&hl7603_regulator_l1>;
+		/* TODO: hl7603_regulator_l1 require to compare with prebuilt nezha;
+		 * rsmc-pa-dcdc-supply = <&hl7603_regulator_l1>;
+		 */
 		rsmc-tcxo-vcc-value = <1800000>;
 		rsmc_enable_x801;
 		rf_file_name = "/odm/etc/rsmc/rf-para/rf.json";
