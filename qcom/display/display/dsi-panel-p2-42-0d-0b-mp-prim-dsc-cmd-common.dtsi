@@ -217,7 +217,7 @@ qcom,mdss-dsi-panel-clockrate = <1198000000>;
 qcom,mdss-dsi-panel-jitter = <0x5 0x1>;
 qcom,mdss-mdp-transfer-time-us = <7300>;
 
-qcom,mdss-dsi-panel-phy-timings = [00 27 0A 0A 1B 19 0A 0B 0A 02 04 00 20 0F];
+qcom,mdss-dsi-panel-phy-timings = [00 27 0A 0A 1B 1F 09 0B 0A 02 04 00 20 0F];
 qcom,display-topology = <2 2 1>;
 qcom,default-topology-index = <0>;
 
