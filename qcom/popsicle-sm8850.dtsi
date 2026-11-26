@@ -154,6 +154,10 @@
 	host-force-gen1;
 };
 
+&pmih010x_haptics {
+	status = "disabled";
+};
+
 &pmih010x_eusb2_repeater {
 	qcom,host-param-override-seq =
 		<0x00 0x50
@@ -728,6 +732,11 @@
 			};
 		};
 	};*/
+};
+
+&regulator_ocp_notifier {
+	/delete-property/ periph-99e-supply;
+	/delete-property/ periph-ac7-supply;
 };
 
 /*Remove PM8010 N for hardware design*/

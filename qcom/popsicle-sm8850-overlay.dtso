@@ -6,11 +6,15 @@
 /dts-v1/;
 /plugin/;
 
+#include <dt-bindings/clock/qcom,rpmh.h>
 #include "popsicle-sm8850.dtsi"
 #include "popsicle-charger-common.dtsi"
 #include "popsicle-uwb-common.dtsi"
 #include "popsicle-nxp-nfc-common.dtsi"
 #include "popsicle-sm8850-touch.dtsi"
+#include "audio/popsicle-audio-mtp.dtsi"
+#include "bt/canoe-peach-bt.dtsi"
+#include "wlan/canoe-peach-cnss.dtsi"
 / {
 	model = "Qualcomm Technologies, Inc. Popsicle based on SM8850";
 	compatible = "qcom,canoe-mtp", "qcom,canoe", "qcom,canoep-mtp", "qcom,canoep",
@@ -20,4 +24,10 @@
 		      <0x1000295 0x10000>, <0x1000295 0x20000>;
 	qcom,board-id = <8 0>;
 	xiaomi,miboard-id = <0x1 0>;
+};
+
+&wlan_peach {
+	clocks = <&rpmhcc RPMH_RF_CLK1>;
+	clock-names = "rf_clk";
+	msix-match-addr = <0x3000>;
 };
