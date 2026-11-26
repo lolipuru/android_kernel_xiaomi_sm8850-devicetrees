@@ -6,7 +6,13 @@
 /dts-v1/;
 /plugin/;
 
+#include <dt-bindings/clock/qcom,camcc-canoe.h>
+#include <dt-bindings/clock/qcom,cambistmclkcc-canoe.h>
+#include <dt-bindings/clock/qcom,gcc-canoe.h>
 #include <dt-bindings/clock/qcom,rpmh.h>
+#include <dt-bindings/interconnect/qcom,canoe.h>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/regulator/qcom,rpmh-regulator-levels.h>
 #include "pandora-sm8850.dtsi"
 #include "pandora-uwb-common.dtsi"
 #include "pandora-nxp-nfc-common.dtsi"
@@ -14,6 +20,8 @@
 #include "pandora-sm8850-touch.dtsi"
 #include "audio/pandora-audio-mtp.dtsi"
 #include "bt/canoe-peach-bt.dtsi"
+#include "camera/pandora-sm8850-camera-sensor.dtsi"
+#include "display/display/pandora-sde-display.dtsi"
 #include "wlan/canoe-peach-cnss.dtsi"
 
 / {

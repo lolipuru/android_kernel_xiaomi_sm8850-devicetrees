@@ -149,8 +149,6 @@ _platform_map = {
             {"name": "popsicle-sm8850-overlay.dtbo"},
             {"name": "pudding-sm8850-overlay.dtbo"},
             {"name": "nezha-sm8850-overlay.dtbo"},
-            {"name": "pandora-sm8850-overlay.dtbo"},
-            {"name": "popsicle-sm8850-overlay.dtbo"},
         ],
         "binary_compatible_with": ["alor", "alor-interposer", "chora", "ravelin", "bourtzi"],
     },
